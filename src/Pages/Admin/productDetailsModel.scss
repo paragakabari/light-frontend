@@ -1,0 +1,15 @@
+@import "../../styles/index.scss";
+
+.main-content {
+    text-align: start;
+    padding: 10px;    
+    .model-images {
+        display: inline-block;
+        padding: 20px 20px 20px 0px;
+        img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+        }
+    }
+}

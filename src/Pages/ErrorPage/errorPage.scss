@@ -1,0 +1,26 @@
+.main{
+    background-color: #ed3237;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    font-family: cursive;
+    h1{
+        font-size: 50px;
+    }
+    .redirect-btn{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        padding: 30px;
+    }
+    a{
+        background-color: white;
+        padding: 5px 10px;
+        border-radius: 10px;
+        color: #ed3237;
+    }
+}

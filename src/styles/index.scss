@@ -1,0 +1,67 @@
+@import '../../src/styles/mixins//breakpoints';
+@import 'theme';
+@import 'common';
+@import 'variables';
+
+.button {
+    button {
+        background-color: #ed3337;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 9999px;
+        border: none;
+        letter-spacing: 1px;
+        cursor: pointer;
+    }
+}
+
+.button-outline {
+    button {
+        background-color: transparent;
+        padding: 14px 40px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #fff;
+        border-radius: 9999px;
+        border: 1px solid #ed3337;
+        cursor: pointer;
+        letter-spacing: 1px;
+        transition: .3s ease-in-out;
+
+        &:hover {
+            background-color: #ed3337;
+        }
+    }
+}
+
+
+$break-point: (
+  base: 0px,
+  sm: 540px,
+  md: 992px,
+  lg: 1280px,
+);
+
+.container {
+  width: 100%;
+  padding: 0 160px;
+  margin: 0 auto;
+  @include breakpoint("sm-min") {
+    padding: 26px;
+}
+}
+
+.sub-container {
+  max-width: 1260px;
+  padding: 0 0;
+  margin: 0 auto;
+}
+
+.page-container {
+  max-width: 1320px;
+  max-width: 1650px;
+  padding: 0 map-get($pixel, md) * 2;
+  margin: 0 auto;
+}

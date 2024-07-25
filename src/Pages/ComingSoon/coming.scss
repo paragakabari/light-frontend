@@ -1,0 +1,27 @@
+.coming-soon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: #fff;
+
+  .logo {
+    height: 100px;
+    margin-bottom: 2rem;
+  }
+
+  h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: #e01a33; // Use your logo's primary color
+  }
+
+  p {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+}
