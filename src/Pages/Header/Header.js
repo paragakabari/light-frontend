@@ -44,7 +44,7 @@ export default function Header() {
               )}
             </div>
             <div className="mobile-menu" onClick={() => setHeader(!header)}>
-              <i class="fa-solid fa-bars"></i>
+              <i className="fa-solid fa-bars"></i>
             </div>
           </div>
         </div>
@@ -54,7 +54,7 @@ export default function Header() {
           <div className="logo" onClick={() => setHeader(false)}>
             <img src={logo} alt="logo" />
           </div>
-          <i onClick={() => setHeader(false)} class="fa-solid fa-xmark"></i>
+          <i onClick={() => setHeader(false)} className="fa-solid fa-xmark"></i>
         </div>
         <div className="header-body">
           <NavLink onClick={() => setHeader(false)} to="/">

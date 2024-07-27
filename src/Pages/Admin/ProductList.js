@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import "./productList.scss";
 import AddProductModel from "./AddProductModel";
 import DataTable from "react-data-table-component";
-import ProductData from "./FackData.json";
 import Swal from "sweetalert2";
 import ProductDetailsModel from "./ProductDetailsModel";
+import toast from "react-hot-toast";
+import { ApiDelete, ApiGet } from "../../services/helpers/API/ApiData";
 
 export default function ProductList() {
   const [addmodel, setAddModel] = useState(false);
-  const [viewModel, setViewModel] = useState(true);
+  const [viewModel, setViewModel] = useState(false);
   const [viewModelData, setViewModelData] = useState({});
-  const [product, setProduct] = useState([...ProductData]);
+  const [products, setProducts] = useState();
   const [edit, setEdit] = useState(false);
 
   const modalShowHandal = () => {
@@ -31,10 +32,8 @@ export default function ProductList() {
   };
 
   useEffect(() => {
-    if (viewModel) {
-      console.log(viewModelData);
-    }
-  }, [viewModelData]);
+    getProduct();
+  }, []);
 
   const handleDelete = (id) => {
     console.log("Delete product with id:", id);
@@ -58,11 +57,20 @@ export default function ProductList() {
       })
       .then((result) => {
         if (result.isConfirmed) {
-          swalWithBootstrapButtons.fire({
-            title: "Deleted!",
-            text: "Your file has been deleted.",
-            icon: "success",
-          });
+          ApiDelete("products/delete/" + id)
+            .then((res) => {
+              getProduct();
+              setProducts(res.data.results);
+              swalWithBootstrapButtons.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            })
+            .catch((err) => {
+              console.log("ERR", err);
+              toast.error("Error adding product!");
+            });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({
             title: "Cancelled",
@@ -76,18 +84,38 @@ export default function ProductList() {
   const columns = [
     {
       name: "Product Name",
-      selector: (row) => row.productName,
+      selector: (row) => row.name,
       sortable: true,
     },
     {
       name: "Description",
       selector: (row) => row.description,
       sortable: true,
-      width:"200px",
+      width: "200px",
     },
     {
       name: "Price",
       selector: (row) => row.price,
+      sortable: true,
+    },
+    {
+      name: "Seller Price",
+      selector: (row) => row.sellerPrice,
+      sortable: true,
+    },
+    {
+      name: "Manufacturer Name",
+      selector: (row) => row.manufacturername,
+      sortable: true,
+    },
+    {
+      name: "Manufacturer Number",
+      selector: (row) => row.manufacturernumber,
+      sortable: true,
+    },
+    {
+      name: "Manufacturer Address",
+      selector: (row) => row.manufactureraddress,
       sortable: true,
     },
     {
@@ -111,6 +139,18 @@ export default function ProductList() {
     },
   ];
 
+  function getProduct() {
+    ApiGet("products/get")
+      .then((res) => {
+        setProducts(res.data.results);
+        toast.success("Product Get Successfully !");
+      })
+      .catch((err) => {
+        console.log("ERR", err);
+        toast.error("Error adding product!");
+      });
+  }
+
   return (
     <>
       <div className="product-outer">
@@ -124,7 +164,7 @@ export default function ProductList() {
               Add Product
             </button>
             {addmodel && (
-              <AddProductModel modalShowHandal={modalShowHandal} edit={edit} />
+              <AddProductModel modalShowHandal={modalShowHandal} edit={edit} getProductData={getProduct}/>
             )}
             {viewModel && (
               <ProductDetailsModel
@@ -135,7 +175,7 @@ export default function ProductList() {
           </div>
         </div>
         <div className="product-table">
-          <DataTable title="" columns={columns} data={product} pagination />
+          <DataTable title="" columns={columns} data={products} pagination />
         </div>
       </div>
     </>

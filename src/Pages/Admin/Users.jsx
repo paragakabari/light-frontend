@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import DataTable from "react-data-table-component";
-import { ToggleButton } from "primereact/togglebutton";
-import "primereact/resources/themes/saga-blue/theme.css";
+import { Switch } from "@mui/material";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import "./users.scss"
 
 function Users() {
-  const [toggleState, setToggleState] = useState({});
-
-  const handleToggle = (id, value) => {
-    setToggleState((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
+  // Initialize state for switch values
+  
+  // Handle switch state change
+  const handleSwitchChange = (id) => (event) => {
+    setSwitchStates({
+      ...switchStates,
+      [id]: event.target.checked,
+    });
   };
-
+  
+  // Define columns
   const columns = [
     {
       name: "Title",
@@ -34,20 +36,19 @@ function Users() {
     {
       name: "Status",
       cell: (row) => (
-        <div className="card flex justify-content-center">
-          <ToggleButton
-            onIcon="pi pi-check"
-            offIcon="pi pi-times"
-            checked={toggleState[row.id] || false}
-            onChange={(e) => handleToggle(row.id, e.value)}
-            className={`w-8rem ${toggleState[row.id] ? 'btn-checked' : 'btn-unchecked'}`}
-          />
+        <div>
+          <Switch
+            checked={switchStates[row.id] || false}
+            onChange={handleSwitchChange(row.id)}
+            inputProps={{ "aria-label": "Switch demo" }}
+            />
         </div>
       ),
       sortable: false,
     },
   ];
-
+  
+  // Define data
   const data = [
     {
       id: 1,
@@ -68,9 +69,16 @@ function Users() {
       year: "2008",
     },
   ];
-
+  const [switchStates, setSwitchStates] = useState(
+    data.reduce((acc, item) => {
+      acc[item.id] = true; 
+      return acc;
+    }, {})
+  );
+  console.log(switchStates)
+  
   return (
-    <div className="container">
+    <div className="user-outer">
       <div className="admin-dashboard-content">
         <div className="product-table">
           <DataTable

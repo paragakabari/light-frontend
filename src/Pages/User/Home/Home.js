@@ -14,7 +14,7 @@ const NextArrow = (props) => {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <i class="fa-solid fa-arrow-right"></i>{" "}
+      <i className="fa-solid fa-arrow-right"></i>{" "}
     </div>
   );
 };
@@ -27,7 +27,7 @@ const PrevArrow = (props) => {
       style={{ ...style, display: "block" }}
       onClick={onClick}
     >
-      <i class="fa-solid fa-arrow-left"></i>{" "}
+      <i className="fa-solid fa-arrow-left"></i>{" "}
     </div>
   );
 };

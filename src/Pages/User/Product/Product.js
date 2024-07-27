@@ -124,7 +124,7 @@ export default function Product() {
                     <img src={x.image} alt="product" />
                   </div>
                   <NavLink className="eye" onClick={() => modelShow(x)}>
-                    <i class="fa-solid fa-eye"></i>
+                    <i className="fa-solid fa-eye"></i>
                   </NavLink>
                   {/* <div className="add-cart">
                     <NavLink to="/cart">Add To Cart</NavLink>

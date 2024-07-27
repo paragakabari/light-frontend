@@ -29,15 +29,15 @@ export default function Footer() {
             <div>
               <h2>Get In Touch!</h2>
               <div className="icon-text">
-                <i class="fa-solid fa-phone"></i>
+                <i className="fa-solid fa-phone"></i>
                 <a href="#">(416) 888-0874</a>
               </div>
               <div className="icon-text">
-                <i class="fa-solid fa-phone"></i>
+                <i className="fa-solid fa-phone"></i>
                 <a href="#">(416) 888-0874</a>
               </div>
               <div className="icon-text">
-                <i class="fa-solid fa-envelope"></i>
+                <i className="fa-solid fa-envelope"></i>
                 <a href="mailto:light@gmail.com">light@gmail.com</a>
               </div>
             </div>
@@ -45,10 +45,10 @@ export default function Footer() {
               <h2>Contact Us</h2>
               <a href="#">Get started today</a>
               <div className="social-icon-alignment">
-                <i class="fa-brands fa-facebook"></i>
-                <i class="fa-brands fa-instagram"></i>
-                <i class="fa-brands fa-linkedin"></i>
-                <i class="fa-brands fa-twitter"></i>
+                <i className="fa-brands fa-facebook"></i>
+                <i className="fa-brands fa-instagram"></i>
+                <i className="fa-brands fa-linkedin"></i>
+                <i className="fa-brands fa-twitter"></i>
               </div>
             </div>
           </div>

@@ -6,7 +6,7 @@ const AdminLayout = ({ children }) => {
   const isAuthenticated =
     cookies.role ==='admin' 
 
-  if (!isAuthenticated) return children;
+  if (isAuthenticated) return children;
 
   // return <Navigate to="/login" />;
   return (window.location.href = redirects);

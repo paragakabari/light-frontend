@@ -18,7 +18,7 @@ function ProductModel(props) {
       <div className="popup-overlay">
         <div className="popup">
           <button className="close-btn" onClick={props.modalShowHandal}>
-            <i class="fa-solid fa-xmark"></i>
+            <i className="fa-solid fa-xmark"></i>
           </button>
           <div className="main-detail-grid">
             <div className="sub-item">
@@ -64,11 +64,11 @@ function ProductModel(props) {
                       quantity > 0 ? setQuantity(quantity - 1) : quantity
                     }
                   >
-                    <i class="fa-solid fa-minus"></i>
+                    <i className="fa-solid fa-minus"></i>
                   </button>
                   <span>{quantity}</span>
                   <button onClick={() => setQuantity(quantity + 1)}>
-                    <i class="fa-solid fa-plus"></i>
+                    <i className="fa-solid fa-plus"></i>
                   </button>
                 </div>
                 <button className="buy-btn">Add to Cart</button>
@@ -78,7 +78,7 @@ function ProductModel(props) {
               <div className="services">
                 <div className="services-inner">
                   <div className="service-icon">
-                    <i class="fa-solid fa-truck"></i>
+                    <i className="fa-solid fa-truck"></i>
                   </div>
                   <div>
                     <h5>Free Delivery</h5>
@@ -90,7 +90,7 @@ function ProductModel(props) {
                 <hr />
                 <div className="services-inner">
                   <div className="service-icon">
-                    <i class="fa-solid fa-rotate-left"></i>
+                    <i className="fa-solid fa-rotate-left"></i>
                   </div>
                   <div>
                     <h5>Return Delivery</h5>

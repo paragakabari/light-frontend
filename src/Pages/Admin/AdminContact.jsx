@@ -4,6 +4,7 @@ import { ToggleButton } from "primereact/togglebutton";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import "./adminContect.scss"
 
 function AdminContact() {
   const [toggleState, setToggleState] = useState({});
@@ -56,11 +57,11 @@ function AdminContact() {
   ];
 
   return (
-    <div className="container">
+    <div className="contect-outer">
       <div className="admin-dashboard-content">
         <div className="product-table">
           <DataTable
-            email="Contact List"
+            title="Contact List"
             columns={columns}
             data={data}
             pagination
