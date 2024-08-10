@@ -21,7 +21,7 @@ const NextArrow = (props) => {
 };
 
 const PrevArrow = (props) => {
-  const { className, style, onClick } = props;
+  const {  style, onClick } = props;
   return (
     <div
       className="slick-arrow slick-arrow-left"

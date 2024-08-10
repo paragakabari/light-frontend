@@ -36,14 +36,14 @@ function ProductDetailsModel(props) {
                   <td className="img-contener">
                     {props.data.images?.map((x, i) => {
                       return (
-                        <a href={x} target="_blank" key={i}>
+                        <div href={x} target="" key={i}>
                           <img
                             
                             src={x}
                             alt="Document"
                             className="document-img"
                           />
-                        </a>
+                        </div>
                       )
                     })}
                   </td>

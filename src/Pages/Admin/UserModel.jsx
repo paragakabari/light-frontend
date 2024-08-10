@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { API } from "../../services/config/APP/api.config";
 import "./userModel.scss";
 import { ApiPut } from "../../services/helpers/API/ApiData";
 import toast from "react-hot-toast";
 
 function UserModel({ userData, modalShowHandal }) {
   const [status, setStatus] = useState(userData.status);
-  const apiHost = `http://${API.host}`;
-
+  
   const updateStatus = (data, newStatus) => {
     ApiPut("users/update-status/" + data.id, { status: newStatus })
       .then((res) => {

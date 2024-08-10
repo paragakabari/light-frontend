@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/Logo.png";
 import toast from "react-hot-toast";
 export default function AdminSidebar({ isOpen, onClose }) {
@@ -29,10 +29,10 @@ const logout=()=>{
               path === "/admin/dashboard" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/dashboard")}>
+            <NavLink onClick={() => router("/admin/dashboard")}>
               {" "}
               <p>Dashboard</p>
-            </a>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -41,10 +41,10 @@ const logout=()=>{
               path === "/admin/product" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/product")}>
+            <NavLink onClick={() => router("/admin/product")}>
               {" "}
               <p>Product</p>
-            </a>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -53,10 +53,10 @@ const logout=()=>{
               path === "/admin/users" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/users")}>
+            <NavLink onClick={() => router("/admin/users")}>
               {" "}
               <p>Users</p>
-            </a>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -65,10 +65,10 @@ const logout=()=>{
               path === "/admin/contact" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/contact")}>
+            <NavLink onClick={() => router("/admin/contact")}>
               {" "}
               <p>Contact</p>
-            </a>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
