@@ -1,82 +1,66 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { Switch } from "@mui/material";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import "./users.scss"
+import "./users.scss";
+import { ApiGet } from "../../services/helpers/API/ApiData";
+import UserModel from "./UserModel";
 
 function Users() {
-  // Initialize state for switch values
-  
-  // Handle switch state change
-  const handleSwitchChange = (id) => (event) => {
-    setSwitchStates({
-      ...switchStates,
-      [id]: event.target.checked,
-    });
+  const [data, setData] = useState([]);
+  const [viewModel, setViewModel] = useState(false);
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
+  const getUsers = async () => {
+    try {
+      const res = await ApiGet("users/get");
+      setData(res.data);
+      
+    } catch (err) {
+      console.error("Error fetching users:", err);
+    }
   };
-  
-  // Define columns
+
+  const handleShow = (user) => {
+    setViewModel(true);
+    setUserData(user);
+  };
+
+  const modalShowHandal = () => {
+    setViewModel(false);
+    getUsers();
+  };
+
   const columns = [
     {
       name: "Title",
-      selector: (row) => row.title,
+      selector: (row) => row.name,
       sortable: true,
     },
     {
-      name: "Director",
-      selector: (row) => row.director,
+      name: "Role",
+      selector: (row) => row.role,
       sortable: true,
     },
     {
-      name: "Year",
-      selector: (row) => row.year,
+      name: "Email",
+      selector: (row) => row.email,
       sortable: true,
     },
     {
-      name: "Status",
+      name: "Details",
       cell: (row) => (
-        <div>
-          <Switch
-            checked={switchStates[row.id] || false}
-            onChange={handleSwitchChange(row.id)}
-            inputProps={{ "aria-label": "Switch demo" }}
-            />
-        </div>
+        <button className="viewBtn" onClick={() => handleShow(row)}>
+          <i className="fa-solid fa-eye"></i>
+        </button>
       ),
       sortable: false,
     },
   ];
-  
-  // Define data
-  const data = [
-    {
-      id: 1,
-      title: "The Shawshank Redemption",
-      director: "Frank Darabont",
-      year: "1994",
-    },
-    {
-      id: 2,
-      title: "The Godfather",
-      director: "Francis Ford Coppola",
-      year: "1972",
-    },
-    {
-      id: 3,
-      title: "The Dark Knight",
-      director: "Christopher Nolan",
-      year: "2008",
-    },
-  ];
-  const [switchStates, setSwitchStates] = useState(
-    data.reduce((acc, item) => {
-      acc[item.id] = true; 
-      return acc;
-    }, {})
-  );
-  console.log(switchStates)
-  
   return (
     <div className="user-outer">
       <div className="admin-dashboard-content">
@@ -87,6 +71,9 @@ function Users() {
             data={data}
             pagination
           />
+          {viewModel && (
+            <UserModel modalShowHandal={modalShowHandal} userData={userData} />
+          )}
         </div>
       </div>
     </div>

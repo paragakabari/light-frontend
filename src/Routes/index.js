@@ -13,6 +13,7 @@ import Product from "../Pages/User/Product/Product";
 import AdminLayout from "./AdminLayout";
 import DefaultLayout from "./DefaultLayout";
 import SignedInRoute from "./SignedInRoute";
+import Profile from "../Pages/User/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +70,17 @@ export const router = createBrowserRouter([
     element: (
       <DefaultLayout>
         <About />
+       
+
+      </DefaultLayout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile",
+    element: (
+      <DefaultLayout>
+        <Profile />
        
 
       </DefaultLayout>

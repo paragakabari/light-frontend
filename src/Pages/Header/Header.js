@@ -1,17 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./header.scss";
 import logo from "../../assets/img/Logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Header() {
   const [header, setHeader] = useState(false);
+  const [localStorageData, setLocalStorageData] = useState({});
 
-  const logout = () => {
-    localStorage.removeItem("isLogin")
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+    setLocalStorageData(data);
+  }, []);
+
+  const clearAllStorage = () => {
+    localStorage.clear();
+
+    sessionStorage.clear();
+
     toast.success("Logout Successfully !");
+    navigate("/login");
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <header>
@@ -29,20 +57,51 @@ export default function Header() {
               <NavLink to="/product">Product</NavLink>
               <NavLink to="/about">About</NavLink>
               <NavLink to="/contact">Contact</NavLink>
-              {localStorage.getItem("isLogin") ? (
-                <NavLink
-                  to="/login"
-                  className="login-btn"
-                  onClick={logout}
-                >
-                  Logout
-                </NavLink>
-              ) : (
-                <NavLink to="/login" className="login-btn">
-                  Login
-                </NavLink>
-              )}
             </div>
+
+            {localStorageData.role === "user" ||
+            localStorageData.role === "seller" ? (
+              <div className="profile">
+                <Button
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                  onClick={handleClick}
+                  onMouseEnter={handleClick}
+                >
+                  <i className="fa-solid fa-user"></i>
+                </Button>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  onMouseLeave={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <NavLink to="/profile" className="option-Btn">
+                      <i className="fa-solid fa-user"></i> Profile
+                    </NavLink>
+                  </MenuItem>
+                  <MenuItem onClick={handleClose}>
+                    <NavLink to="/cart" className="option-Btn">
+                      <i className="fa-solid fa-cart-shopping"></i> Cart
+                    </NavLink>
+                  </MenuItem>
+
+                  <MenuItem onClick={clearAllStorage} className="option-Btn">
+                    <NavLink className="option-Btn">
+                      <i className="fa-solid fa-right-to-bracket"></i> Logout
+                    </NavLink>
+                  </MenuItem>
+                </Menu>
+              </div>
+            ) : (
+              <NavLink to="/login" className="login-btn">
+                Login
+              </NavLink>
+            )}
+
             <div className="mobile-menu" onClick={() => setHeader(!header)}>
               <i className="fa-solid fa-bars"></i>
             </div>
@@ -71,16 +130,24 @@ export default function Header() {
             Contact
           </NavLink>
 
-          {localStorage.getItem("isLogin") ? (
+          <NavLink onClick={() => setHeader(false)} to="/profile">
+            Profile
+          </NavLink>
+
+          {localStorageData.role === "user" || localStorageData.role === "seller" ? (
             <NavLink
-              to="/login"
-              className="login-btn"
-              onClick={() => localStorage.removeItem("isLogin")}
+              to="/cart"
+              onClick={() => setHeader(false)}
+              className="cart"
             >
-              Logout
+              Cart
             </NavLink>
           ) : (
-            <NavLink to="/login" className="login-btn">
+            <NavLink
+              to="/login"
+              onClick={() => setHeader(false)}
+              className="login-btn"
+            >
               Login
             </NavLink>
           )}

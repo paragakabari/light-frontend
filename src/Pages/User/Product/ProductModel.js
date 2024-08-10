@@ -1,17 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ProductModel.scss";
-import img1 from "../../../assets/light3.webp";
-import img2 from "../../../assets/celling Light.jpg";
-import img3 from "../../../assets/celling Light4.jpg";
-import img4 from "../../../assets/light1.webp";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { ApiPost } from "../../../services/helpers/API/ApiData";
 
 function ProductModel(props) {
   const product = props.productData;
-  const [quantity, setQuantity] = useState(0);
-  const [mainImg, setMainImg] = useState(product ? product.image : "");
+  const [quantity, setQuantity] = useState(1);
+  const [mainImg, setMainImg] = useState(product.images[0]);
   const [activeImg, setActiveImg] = useState(null);
+  const [localStorageData, setLocalStorageData] = useState({});
+  const navigate = useNavigate();
 
-  const imgs = [product.image,img1, img2, img3, img4];
+  const imgs = product.images;
+
+  useEffect(() => {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+    setLocalStorageData(data);
+  }, []);
+
+  const cartHandl = (id, quantity) => {
+    if (
+      localStorageData.role === "user" ||
+      localStorageData.role === "seller"
+    ) {
+      addCart(id, quantity);
+    } else {
+      toast.error("Please Login First !");
+      navigate("/login");
+    }
+  };
+
+  const addCart = (id, quantity) => {
+    const data = {
+      productId: id,
+      quantity: quantity,
+    };
+    ApiPost("carts/add", data)
+      .then((res) => {
+        toast.success("Product Added to Cart Successfully!");
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
+  };
 
   return (
     <>
@@ -24,19 +60,19 @@ function ProductModel(props) {
             <div className="sub-item">
               <div className="border">
                 {imgs.map((x, i) => {
-                          const isActive = x === activeImg;
+                  const isActive = x === activeImg;
                   return (
                     <img
-                      key={i}
-                      className={`product-other-image ${
-                        isActive ? "active" : ""
-                      }`}
-                      src={x}
-                      alt="Product"
-                      onClick={() => {
-                        setMainImg(x);
-                        setActiveImg(x);
-                      }}
+                    key={i}
+                    className={`product-other-image ${
+                      isActive ? "active" : ""
+                    }`}
+                    src={x}
+                    alt="Product"
+                    onClick={() => {
+                      setMainImg(x);
+                      setActiveImg(x);
+                    }}
                     />
                   );
                 })}
@@ -51,9 +87,14 @@ function ProductModel(props) {
             </div>
             <div className="sub-item border">
               <div>
-                <h3>{product ? product.name : "Title"}</h3>
-                <h4>${product ? product.price : "00.00"}</h4>
-                <p>{product ? product.discription : "discription"}</p>
+                <h3>{product.name}</h3>
+                <h4>&#8377;{product.price}</h4>
+                {localStorage.getItem("role") === "seller" && (
+                  <h4 className="product-price">
+                    Seller Price: &#8377;{product.sellerPrice}
+                  </h4>
+                )}
+                <p>{product.discription}</p>
               </div>
               <hr />
 
@@ -61,7 +102,7 @@ function ProductModel(props) {
                 <div className="quantity-outer">
                   <button
                     onClick={() =>
-                      quantity > 0 ? setQuantity(quantity - 1) : quantity
+                      quantity > 1 ? setQuantity(quantity - 1) : quantity
                     }
                   >
                     <i className="fa-solid fa-minus"></i>
@@ -71,8 +112,12 @@ function ProductModel(props) {
                     <i className="fa-solid fa-plus"></i>
                   </button>
                 </div>
-                <button className="buy-btn">Add to Cart</button>
-                <button className="buy-btn">Buy Now</button>
+                <button
+                  className="buy-btn"
+                  onClick={() => cartHandl(product.id, quantity)}
+                >
+                  Add to Cart
+                </button>
               </div>
               <hr />
               <div className="services">
@@ -94,7 +139,7 @@ function ProductModel(props) {
                   </div>
                   <div>
                     <h5>Return Delivery</h5>
-                    <span>Free 30 Days Delivery Returns </span>
+                    <span>Free 30 Days Delivery Returns</span>
                   </div>
                 </div>
               </div>
@@ -105,4 +150,5 @@ function ProductModel(props) {
     </>
   );
 }
+
 export default ProductModel;

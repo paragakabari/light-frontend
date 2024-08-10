@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.scss";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import light from "../../../assets/architecture-wood-villa-mansion-house-chair-1590901-pxhere.com-removebg-preview.png";
 import { NavLink } from "react-router-dom";
+import { ApiGet } from "../../../services/helpers/API/ApiData";
 
 const NextArrow = (props) => {
   const { style, onClick } = props;
@@ -32,44 +33,22 @@ const PrevArrow = (props) => {
   );
 };
 export default function Home() {
-  const products = [
-    {
-      id: 1,
-      image: require("../../../assets/Procuct_light1.webp"),
-      name: "Originals Kaval Windbreaker Winter Jacket",
-      price: 19.12,
-      originalPrice: 23.9,
-      discount: "-20%",
-      rating: 5,
-      isNew: false,
-    },
-    {
-      id: 2,
-      image: require("../../../assets/Procuct_light2.jpg"),
-      name: "Juicy Couture Juicy Quilted Terry Track Jacket",
-      price: 11.9,
-      originalPrice: 35.9,
-      discount: "-20%",
-      rating: 5,
-      isNew: false,
-    },
-    {
-      id: 3,
-      image: require("../../../assets/architecture-wood-villa-mansion-house-chair-1590901-pxhere.com.jpg"),
-      name: "Madden By Steve Madden Cale 6",
-      price: 11.9,
-      rating: 4,
-      isNew: true,
-    },
-    {
-      id: 4,
-      image: require("../../../assets/light-wall-ceiling-lamp-room-lighting-666706-pxhere.com.jpg"),
-      name: "Brixton Patrol All Terrain Anorak Jacket",
-      price: 29.0,
-      rating: 5,
-      isNew: false,
-    },
-  ];
+  const [products, setProducts] = useState();
+
+  useEffect(() => {
+    getProduct();
+  }, []);
+
+  const getProduct = () => {
+    ApiGet("products/getAll")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        // toast.error("Error fetching products!");
+      });
+  };
+
   const testimonials = [
     {
       name: "John Doe",
@@ -77,7 +56,6 @@ export default function Home() {
       text: "Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril.",
       email: "demo@posthemes.com",
     },
-    // Add more testimonials as needed
     {
       name: "Jane Doe",
       image: require("../../../assets/0a4ad9c59f345735e520dc6118ccd447.jpg"),
@@ -201,7 +179,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <img src={light} style={{ height: "500px" }}></img>
+                  <img src={light} style={{ height: "500px" }} alt="" ></img>
                 </div>
               </div>
             </div>
@@ -262,29 +240,34 @@ export default function Home() {
           <div className="section-title">Top Products</div>
           <div className="product-slider">
             <Slider {...settings}>
-              {products.map((product) => (
+              {products?.map((product) => (
                 <div key={product.id} className="product-card">
                   <img
-                    src={product.image}
+                    src={ product.images[0]}
                     alt={product.name}
                     className="product-image"
                   />
                   <div className="product-details">
                     <h3 className="product-name">{product.name}</h3>
                     <div className="product-price">
-                      {/* {product.originalPrice && (
-                        <span className="original-price">
-                          ${product.originalPrice}
-                        </span>
-                      )} */}
-                      <span className="price">${product.price}</span>
+                      
+                      <span className="price">
+                        &#8377;{product.price}
+                        {localStorage.getItem("role") === "seller" && (
+                          <div className="product-price">
+                            Seller Price: &#8377;{product.sellerPrice}
+                          </div>
+                        )}
+                      </span>
                     </div>
                   </div>
                 </div>
               ))}
             </Slider>
             <div className="all-product-btn-outer">
-              <NavLink to="/product" className="all-product-btn">View All Products</NavLink>
+              <NavLink to="/product" className="all-product-btn">
+                View All Products
+              </NavLink>
             </div>
           </div>
         </div>
@@ -318,11 +301,11 @@ export default function Home() {
                   View Collection
                 </a>
               </div>
-                <img
-                  src={offers[0].image}
-                  alt={offers[0].title}
-                  className="offer-image"
-                />
+              <img
+                src={offers[0].image}
+                alt={offers[0].title}
+                className="offer-image"
+              />
             </div>
           </div>
         </div>

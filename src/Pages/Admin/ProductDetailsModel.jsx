@@ -6,26 +6,71 @@ function ProductDetailsModel(props) {
     <>
       <div className="popup-overlay">
         <div className="popup">
+
           <button className="close-btn" onClick={props.modalShowHandal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
+          <h2>Product Detail</h2>
           <div className="main-content">
-            <h2>Product Name:- {props.data.name}</h2>
-            <h4>Price:- ${props.data.price}</h4>
-            <h4>Seller Price:- ${props.data.sellerPrice}</h4>
-            <p>Description:- {props.data.description}</p>
-            {/* {(props.data.image)?.map((img, index) => {
-              return (
-                <div className="model-images" key={index}>
-                  <img src={img} alt={`Product Image ${index + 1}`} />
-                </div>
-              );
-            })} */}
-            <br /><br />
-            <h4>Manufacturer Details:</h4>
-            <h5 className="manufacturer">Name:- {props.data.manufacturername}</h5>
-            <h5 className="manufacturer">Number:- {props.data.manufacturernumber}</h5>
-            <h5 className="manufacturer">Address:- {props.data.manufactureraddress}</h5>
+            <table className="user-details-table">
+              <tbody>
+                <tr>
+                  <th>Product Name:- </th>
+                  <td>{props.data.name}</td>
+                </tr>
+                <tr>
+                  <th>Price:- </th>
+                  <td>{props.data.price}</td>
+                </tr>
+                <tr>
+                  <th>Seller Price:- </th>
+                  <td>{props.data.sellerPrice}</td>
+                </tr>
+
+                <tr>
+                  <th>Description:- </th>
+                  <td>{props.data.description}</td>
+                </tr>
+                <tr>
+                  <th>Image:- </th>
+                  <td className="img-contener">
+                    {props.data.images?.map((x, i) => {
+                      return (
+                        <a href={x} target="_blank" key={i}>
+                          <img
+                            
+                            src={x}
+                            alt="Document"
+                            className="document-img"
+                          />
+                        </a>
+                      )
+                    })}
+                  </td>
+                </tr>
+                <tr>
+                  <th>Manufacturer Details:- </th>
+                  <td>
+                    <table>
+                      <tbody>
+                        <tr>
+                          <th>Name:-</th>
+                          <td>{props.data.manufacturername}</td>
+                        </tr>
+                        <tr>
+                          <th>Number:-</th>
+                          <td>{props.data.manufacturernumber}</td>
+                        </tr>
+                        <tr>
+                          <th>Address:-</th>
+                          <td>{props.data.manufactureraddress}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

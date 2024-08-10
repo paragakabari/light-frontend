@@ -1,20 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DataTable from "react-data-table-component";
-import { ToggleButton } from "primereact/togglebutton";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "./adminContect.scss"
+import { ApiGet } from "../../services/helpers/API/ApiData";
 
 function AdminContact() {
-  const [toggleState, setToggleState] = useState({});
+  // const [toggleState, setToggleState] = useState({});
+  const [data,setData]=useState()
 
-  const handleToggle = (id, value) => {
-    setToggleState((prevState) => ({
-      ...prevState,
-      [id]: value,
-    }));
-  };
+  // const handleToggle = (id, value) => {
+  //   setToggleState((prevState) => ({
+  //     ...prevState,
+  //     [id]: value,
+  //   }));
+  // };
+
+  useEffect(() => {
+    getContectList()
+  }, [])
+  
+  const getContectList = ()=>{
+    ApiGet("contact/get")
+      .then((res) => {
+        setData(res.data)
+      })
+      .catch((err) => {
+        // toast.error("Error fetching products!");
+      });
+  }
 
   const columns = [
     
@@ -29,32 +44,17 @@ function AdminContact() {
       sortable: true,
     },
     {
-      name: "Description",
-      selector: (row) => row.description,
+      name: "Subject",
+      selector: (row) => row.subject,
+      sortable: true,
+    },
+    {
+      name: "Message",
+      selector: (row) => row.message,
       sortable: true,
     }
   ];
 
-  const data = [
-    {
-      id: 1,
-      email: "The Shawshank Redemption",
-      description: "Frank Darabont",
-      name: "1994",
-    },
-    {
-      id: 2,
-      email: "The Godfather",
-      description: "Francis Ford Coppola",
-      name: "1972",
-    },
-    {
-      id: 3,
-      email: "The Dark Knight",
-      description: "Christopher Nolan",
-      name: "2008",
-    },
-  ];
 
   return (
     <div className="contect-outer">

@@ -1,0 +1,15 @@
+@import "../../../styles/index.scss";
+
+
+.main-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    .user-details-table{
+        @include breakpoint("md-max") {
+            font-size: 30px;
+          }
+    }    
+}

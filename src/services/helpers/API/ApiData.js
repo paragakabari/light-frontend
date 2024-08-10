@@ -210,10 +210,10 @@ export const ApiPut = (type, userData) => {
     });
 };
 
-export const ApiPatch = (type, userData) => {
+export const ApiDelete1 = (type, userData) => {
     return new Promise((resolve, reject) => {
         axios
-            .patch(BaseURL + type, userData, getHttpOptions())
+            .delete(BaseURL + type, userData, getHttpOptions())
             .then((responseJson) => {
                 resolve(responseJson);
             })
@@ -235,7 +235,7 @@ export const ApiPatch = (type, userData) => {
     });
 };
 
-export const ApiDelete = (type, userData) => {
+export const ApiDelete = (type) => {
     return new Promise((resolve, reject) => {
         axios
             .delete(BaseURL + type, getHttpOptions())

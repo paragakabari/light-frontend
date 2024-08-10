@@ -8,96 +8,79 @@ import toast from "react-hot-toast";
 import { ApiDelete, ApiGet } from "../../services/helpers/API/ApiData";
 
 export default function ProductList() {
-  const [addmodel, setAddModel] = useState(false);
+  const [addModel, setAddModel] = useState(false);
   const [viewModel, setViewModel] = useState(false);
   const [viewModelData, setViewModelData] = useState({});
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
   const [edit, setEdit] = useState(false);
-
-  const modalShowHandal = () => {
-    setAddModel(false);
-    setEdit(false);
-    setViewModel(false);
-  };
-
-  const handleEdit = (id) => {
-    setEdit(true);
-    console.log("Edit product with id:", id);
-    setAddModel(true);
-  };
-
-  const handleShow = (row) => {
-    setViewModelData(row);
-    setViewModel(true);
-  };
+  const [editData, setEditData] = useState(null);
 
   useEffect(() => {
     getProduct();
   }, []);
 
-  const handleDelete = (id) => {
-    console.log("Delete product with id:", id);
+  const modalShowHandal = () => {
+    setAddModel(false);
+    setEdit(false);
+    setViewModel(false);
+    setEditData(null);
+  };
 
-    const swalWithBootstrapButtons = Swal.mixin({
-      customClass: {
-        confirmButton: "btn-success",
-        cancelButton: "deleteBtn",
-      },
-      buttonsStyling: false,
-    });
-    swalWithBootstrapButtons
-      .fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          ApiDelete("products/delete/" + id)
-            .then((res) => {
-              getProduct();
-              setProducts(res.data.results);
-              swalWithBootstrapButtons.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success",
-              });
-            })
-            .catch((err) => {
-              console.log("ERR", err);
-              toast.error("Error adding product!");
-            });
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          swalWithBootstrapButtons.fire({
-            title: "Cancelled",
-            text: "Your imaginary file is safe :)",
-            icon: "error",
+  const handleEdit = (product) => {
+    setEdit(true);
+    setEditData(product);
+    setAddModel(true);
+  };
+
+  const handleShow = (product) => {
+    setViewModelData(product);
+    setViewModel(true);
+  };
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        ApiDelete(`products/delete/${id}`)
+          .then((res) => {
+            getProduct();
+            Swal.fire("Deleted!", "Your product has been deleted.", "success");
+          })
+          .catch((err) => {
+            toast.error(err);
           });
-        }
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your product is safe :)", "error");
+      }
+    });
+  };
+
+  const getProduct = () => {
+    ApiGet("products/get")
+      .then((res) => {
+        setProducts(res.data.results);
+      })
+      .catch((err) => {
+        toast.error(err);
       });
   };
 
   const columns = [
-    {
-      name: "Product Name",
-      selector: (row) => row.name,
-      sortable: true,
-    },
+    { name: "Product Name", selector: (row) => row.name, sortable: true },
     {
       name: "Description",
       selector: (row) => row.description,
       sortable: true,
       width: "200px",
     },
-    {
-      name: "Price",
-      selector: (row) => row.price,
-      sortable: true,
-    },
+    { name: "Price", selector: (row) => row.price, sortable: true },
     {
       name: "Seller Price",
       selector: (row) => row.sellerPrice,
@@ -122,15 +105,13 @@ export default function ProductList() {
       name: "Action",
       cell: (row) => (
         <>
-          <button className="editBtn" onClick={() => handleEdit(row.id)}>
+          <button className="editBtn" onClick={() => handleEdit(row)}>
             <i className="fa-solid fa-pen-to-square"></i>
           </button>
-
           <button className="deleteBtn" onClick={() => handleDelete(row.id)}>
             <i className="fa-solid fa-trash-can"></i>
           </button>
-
-          <button className="editBtn" onClick={() => handleShow(row)}>
+          <button className="viewBtn" onClick={() => handleShow(row)}>
             <i className="fa-solid fa-eye"></i>
           </button>
         </>
@@ -138,18 +119,6 @@ export default function ProductList() {
       sortable: false,
     },
   ];
-
-  function getProduct() {
-    ApiGet("products/get")
-      .then((res) => {
-        setProducts(res.data.results);
-        toast.success("Product Get Successfully !");
-      })
-      .catch((err) => {
-        console.log("ERR", err);
-        toast.error("Error adding product!");
-      });
-  }
 
   return (
     <>
@@ -163,8 +132,13 @@ export default function ProductList() {
             >
               Add Product
             </button>
-            {addmodel && (
-              <AddProductModel modalShowHandal={modalShowHandal} edit={edit} getProductData={getProduct}/>
+            {addModel && (
+              <AddProductModel
+                modalShowHandal={modalShowHandal}
+                edit={edit}
+                initialData={editData}
+                getProductData={getProduct}
+              />
             )}
             {viewModel && (
               <ProductDetailsModel
@@ -175,7 +149,7 @@ export default function ProductList() {
           </div>
         </div>
         <div className="product-table">
-          <DataTable title="" columns={columns} data={products} pagination />
+          <DataTable title="" columns={columns} data={products} pagination  />
         </div>
       </div>
     </>

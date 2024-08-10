@@ -1,6 +1,13 @@
+@import "../../styles/index.scss";
+
+
 .auth-container {
   display: flex;
   height: 100vh;
+
+  @include breakpoint("md-max") {
+    display: block;
+  }
 }
 
 .auth-left,
@@ -17,6 +24,10 @@
   background: linear-gradient(135deg, #e01a33, #6f5e5e, #3f8fcd);
   color: #ffffff;
   text-align: center;
+
+  @include breakpoint("md-max") {
+    height: 25%;
+  }
 
   .logo {
     max-width: 150px;
@@ -41,6 +52,10 @@
   h2 {
     font-size: 2rem;
     margin-bottom: 1rem;
+
+    @include breakpoint("md-max") {
+      font-size: 4rem;
+    }
   }
 
   form {
@@ -48,21 +63,37 @@
     flex-direction: column;
     width: 80%;
     max-width: 400px;
-    margin: 0 auto;
+
+    @include breakpoint("md-max") {
+      margin: 0;
+      font-size: 30px;
+      max-width: 90%;
+    }
 
     input {
       padding: 1rem;
       margin: 0.5rem 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+
+      @include breakpoint("md-max") {
+        font-size: 2rem;
+      }
+
     }
-    .errorMsg{
+
+    .errorMsg {
       color: red;
       width: 100%;
       text-align: start;
       padding-left: 10px;
       font-size: 13px;
+
+      @include breakpoint("md-max") {
+        font-size: 25px;
+      }
     }
+
     .dropdown-select {
       width: 100%;
       padding: 8px;
@@ -71,7 +102,14 @@
       margin: 0.5rem 0;
       border: 1px solid #ccc;
       border-radius: 4px;
+
+      @include breakpoint("md-max") {
+        font-size: 2rem;
+      }
+
     }
+
+
 
     label {
       padding: 1rem;
@@ -82,7 +120,7 @@
 
       i {
         padding: 0px 10px;
-        font-size: 15px;
+        // font-size: 15px;
       }
     }
 
@@ -95,6 +133,10 @@
       cursor: pointer;
       font-size: 1rem;
       margin-top: 1rem;
+
+      @include breakpoint("md-max") {
+        font-size: 2rem;
+      }
     }
   }
 
@@ -127,32 +169,35 @@
   p {
     margin-top: 1rem;
 
+    @include breakpoint("md-max") {
+      font-size: 2rem;
+    }
+
     a {
       color: #e01a33;
       text-decoration: none;
     }
   }
-
 }
 
-.custom-shape-divider-bottom-1721300872 {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 50%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
-}
-
-.custom-shape-divider-bottom-1721300872 svg {
+.password-container {
   position: relative;
-  display: block;
-  width: calc(100% + 1.3px);
-  height: 138px;
-  transform: rotateY(0deg);
-}
+  display: grid;
+  grid-auto-flow: column;
+  align-items: baseline;
 
-.custom-shape-divider-bottom-1721300872 .shape-fill {
-  fill: #e01a34e1;
+
+
+
+  .password-toggle {
+    position: absolute !important;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    background-color: none;
+    border: none;
+    cursor: pointer !important;
+    font-size: 1.2rem;
+    color: #000;
+  }
 }

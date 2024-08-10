@@ -1,10 +1,16 @@
 import React from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/Logo.png";
+import toast from "react-hot-toast";
 export default function AdminSidebar({ isOpen, onClose }) {
   const router = useNavigate();
   const path = useLocation().pathname;
-
+const logout=()=>{
+  localStorage.clear();
+  sessionStorage.clear();
+  toast.success("Logout Success")
+  router("/admin")
+} 
   return (
     <div className="sidebarSection">
       <div className="sidebarTop">
@@ -67,7 +73,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
         </div>
         <div className="sidebarMenu">
           <div className={`menuList`}>
-            <NavLink to={"/login"}>
+            <NavLink onClick={logout}>
               <p>Logout</p>
             </NavLink>
           </div>

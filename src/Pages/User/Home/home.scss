@@ -151,7 +151,7 @@
     @include breakpoint("md-max") {
       padding: 80px;
     }
-
+    
     .product-image {
       width: 100%;
       object-fit: fill;
@@ -159,7 +159,10 @@
       border-radius: 10px;
       // margin-bottom: 15px;
       transition: transform .3s;
-
+      
+      @include breakpoint("md-max") {
+        height: 380px;
+      }
     }
 
     .product-details {

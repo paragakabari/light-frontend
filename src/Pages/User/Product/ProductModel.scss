@@ -52,16 +52,11 @@
             .sub-item:first-child {
                 display: grid;
                 grid-template-columns: 100px 1fr;
-                gap: 20px;
-                @include breakpoint('md-max') {
-                    grid-template-columns: repeat(1, 1fr);
-                }
-                
+                gap: 20px;    
                 
             }
             
             .border {
-                // border: 1px solid #ccc;
                 
                 
                 .display-image {

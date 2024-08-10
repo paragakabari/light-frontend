@@ -1,0 +1,88 @@
+@import "../../styles/index.scss";
+
+/* UserModel.scss */
+.main-content {
+  padding: 20px;
+}
+
+.user-details-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+}
+
+.user-details-table th,
+.user-details-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+
+  .btn-outer {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0px;
+  }
+
+  button {
+    border: 0px;
+    padding: 10px;
+    color: white;
+    border-radius: 6px;
+    font-weight: 700;
+    transition: all .5s ease-in-out;
+
+    &:hover {
+      opacity: 0.8 !important;
+    }
+  }
+
+  .reject {
+    letter-spacing: 3px;
+    background: red;
+  }
+
+  .approve {
+    background: green;
+  }
+}
+
+.status {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-details-table th {
+  width: 30%;
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.user-details-table td {
+}
+
+.user-details-table tr:last-child td {
+  border-bottom: none;
+}
+
+.img-contener {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  .document-img {
+    border-radius: 10px;
+    object-fit: cover;
+    max-width: 150px;
+    max-height: 150px;
+    display: block;
+  }
+}

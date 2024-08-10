@@ -1,41 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./addProductModel.scss";
 import toast, { Toaster } from "react-hot-toast";
-import { Api, ApiPost } from "../../services/helpers/API/ApiData";
+import { ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
+import { API } from "../../services/config/APP/api.config";
 
-function AddProductModel(props) {
+function AddProductModel({
+  edit,
+  modalShowHandal,
+  getProductData,
+  initialData,
+}) {
   const [images, setImages] = useState([]);
   const [formDataImages, setFormDataImages] = useState([]);
-  const [data, setData] = useState({});
-  const [edit, setEdit] = useState(props.edit);
+  const [data, setData] = useState(initialData || {});
   const [errors, setErrors] = useState({});
+  const apiHost = "http://" + API.host;
+
+  useEffect(() => {
+    if (edit && initialData) {
+      setData(initialData);
+      if (initialData.image) {
+        setImages([apiHost + initialData.image]);
+      }
+    }
+  }, [edit, initialData, apiHost]);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-
     if (type === "file") {
-      setFormDataImages(Array.from(files));
-      const filesArray = Array.from(files);
-      const promises = filesArray.map((file) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-      });
-
-      Promise.all(promises)
-        .then((base64Images) => {
-          setImages(base64Images);
-          setData((prevData) => ({
-            ...prevData,
-            ProductImage: base64Images,
-          }));
-        })
-        .catch((error) => {
-          console.error("Error reading files:", error);
-        });
+      handleFileChange(files);
     } else {
       setData((prevData) => ({
         ...prevData,
@@ -44,74 +37,103 @@ function AddProductModel(props) {
     }
   };
 
-  const errorCreate = () => {
+  const handleFileChange = (files) => {
+    const fileArray = Array.from(files);
+    setFormDataImages((prevFormDataImages) => [
+      ...prevFormDataImages,
+      ...fileArray,
+    ]);
+
+    const readerArray = fileArray.map((file) => {
+      const reader = new FileReader();
+      return new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(readerArray)
+      .then((results) => {
+        setImages((prevImages) => [...prevImages, ...results]);
+        setData((prevData) => ({
+          ...prevData,
+          images: [...prevData.images || [], ...results],
+        }));
+      })
+      .catch((error) => {
+        console.error("Error reading files:", error);
+      });
+  };
+
+  const handleImageRemove = (index) => {
+    const updatedImages = images.filter((_, i) => i !== index);
+    const updatedFormDataImages = formDataImages.filter((_, i) => i !== index);
+
+    setImages(updatedImages);
+    setFormDataImages(updatedFormDataImages);
+    setData((prevData) => ({
+      ...prevData,
+      images: updatedImages,
+    }));
+  };
+
+  const validate = () => {
     let newErrors = {};
-    if (!data.ProductTitle) {
-      newErrors.ProductTitle = "Product Name is Required !";
-    }
-    if (!data.Description) {
-      newErrors.Description = "Description Required !";
-    }
-    if (!data.Price) {
-      newErrors.Price = "Price Required !";
-    }
-    if (!data.SellingPrice) {
-      newErrors.SellingPrice = "Selling Price Required !";
-    }
-    if (!data.ProductImage || data.ProductImage.length === 0) {
-      newErrors.ProductImage = "At least one image Required !";
-    }
-    if (!data.manufacturerName) {
-      newErrors.manufacturerName = "Manufacturer Name Required !";
-    }
-    if (!data.manufacturerAddress) {
-      newErrors.manufacturerAddress = "Manufacturer Address Required !";
-    }
-    if (!data.manufacturerNumber) {
-      newErrors.manufacturerNumber = "Manufacturer Number Required !";
-    }
+    if (!data.name) newErrors.name = "Product Name is Required!";
+    if (!data.description) newErrors.description = "Description is Required!";
+    if (!data.price) newErrors.price = "Price is Required!";
+    if (!data.sellerPrice) newErrors.sellerPrice = "Selling price is Required!";
+    if (images.length === 0) newErrors.images = "At least one image is Required!";
+    if (!data.manufacturername)
+      newErrors.manufacturername = "Manufacturer Name is Required!";
+    if (!data.manufactureraddress)
+      newErrors.manufactureraddress = "Manufacturer Address is Required!";
+    if (!data.manufacturernumber)
+      newErrors.manufacturernumber = "Manufacturer Number is Required!";
+
     setErrors(newErrors);
     return newErrors;
   };
 
   const handleSubmit = () => {
-    const validationErrors = errorCreate();
-
+    const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      formData.append("name", data.ProductTitle);
-      formData.append("description", data.Description);
-      formData.append("price", data.Price);
-      formData.append("sellerPrice", data.SellingPrice);
-
-      formData.append("image", formDataImages[0]);
-      formData.append("manufacturername", data.manufacturerName);
-      formData.append("manufacturernumber", data.manufacturerNumber);
-      formData.append("manufactureraddress", data.manufacturerAddress);
-
-      ApiPost("products/create", formData)
-        .then((res) => {
-          console.log("RES", res);
-          toast.success("Product Added Successfully !");
-          props.modalShowHandal();
-          props.getProductData();
-        })
-        .catch((err) => {
-          console.log("ERR", err);
-          toast.error("Error adding product!");
-        });
+      submitForm();
     }
   };
 
-  const handleEdit = () => {
-    const validationErrors = errorCreate();
+  const submitForm = () => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("sellerPrice", data.sellerPrice);
+    // formData.append(`images`, formDataImages);
+    // formDataImages.forEach((file, index) => {
+    // });
+    formDataImages.forEach((file) => {
+      formData.append('images', file);
+    });
+    formData.append("manufacturername", data.manufacturername);
+    formData.append("manufacturernumber", data.manufacturernumber);
+    formData.append("manufactureraddress", data.manufactureraddress);
 
-    if (Object.keys(validationErrors).length === 0) {
-      // Add API call logic here if needed
-      toast.success("Product Edited Successfully !");
-      console.log(data);
-      props.modalShowHandal();
-    }
+    const apiCall = edit ? ApiPut : ApiPost;
+    const apiEndpoint = edit ? `products/update/${data.id}` : "products/create";
+
+    apiCall(apiEndpoint, formData)
+      .then((res) => {
+          toast.success(
+          edit ? "Product Edited Successfully!" : "Product Added Successfully!"
+        );
+        modalShowHandal();
+        getProductData();
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+        toast.error("Error saving product!");
+      });
   };
 
   return (
@@ -119,98 +141,101 @@ function AddProductModel(props) {
       <div className="popup-overlay">
         <Toaster position="top-center" reverseOrder={true} />
         <div className="popup">
-          <button className="close-btn" onClick={props.modalShowHandal}>
+          <button className="close-btn" onClick={modalShowHandal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
-          <h2>Product List</h2>
-
+          <h2>{edit ? "Edit Product" : "Add Product"}</h2>
           <form className="form">
             <div className="inputfield">
               <input
                 type="text"
-                name="ProductTitle"
+                name="name"
+                value={data.name || ""}
                 onChange={handleChange}
                 placeholder="Enter Product title"
               />
-              <p>{errors.ProductTitle}</p>
+              <p>{errors.name}</p>
               <input
                 type="text"
-                name="Description"
+                name="description"
+                value={data.description || ""}
                 onChange={handleChange}
-                placeholder="Enter Description"
+                placeholder="Enter description"
               />
-              <p>{errors.Description}</p>
+              <p>{errors.description}</p>
               <input
                 type="number"
-                name="Price"
+                name="price"
+                value={data.price || ""}
                 onChange={handleChange}
-                placeholder="Enter Price"
+                placeholder="Enter price"
               />
-              <p>{errors.Price}</p>
+              <p>{errors.price}</p>
               <input
                 type="number"
-                name="SellingPrice"
+                name="sellerPrice"
+                value={data.sellerPrice || ""}
                 onChange={handleChange}
-                placeholder="Enter Selling Price"
+                placeholder="Enter Selling price"
               />
-              <p>{errors.SellingPrice}</p>
-              <label htmlFor="ProductImage">
-                <span>Upload Product Image</span>
+              <p>{errors.sellerPrice}</p>
+              <label htmlFor="images">
+                <span>Upload Product Images</span>
                 <i className="fas fa-images"></i>
               </label>
-              <p>{errors.ProductImage}</p>
+              <p>{errors.images}</p>
               <input
                 type="file"
-                id="ProductImage"
+                id="images"
                 hidden
                 onChange={handleChange}
                 accept="image/png, image/gif, image/jpeg"
+                name="images"
                 multiple
-                name="ProductImage"
               />
               <div>
-                {images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Preview ${index}`}
-                    style={{ width: "100px", height: "100px", margin: "10px" }}
-                  />
-                ))}
+
+                {data.images?.length > 0 &&
+                  data.images.map((image, index) => (
+                    <img
+                      key={index}
+                      alt={`Product ${index}`}
+                      src={image}
+                      style={{ width: "100px", height: "100px", margin: "10px", cursor: "pointer" }}
+                      onClick={() => handleImageRemove(index)}
+                    />
+                  ))}
               </div>
               <h5>Manufacturer Details</h5>
               <input
                 type="text"
-                name="manufacturerName"
+                name="manufacturername"
+                value={data.manufacturername || ""}
                 onChange={handleChange}
                 placeholder="Enter Name"
               />
-              <p>{errors.manufacturerName}</p>
+              <p>{errors.manufacturername}</p>
               <input
                 type="text"
-                name="manufacturerAddress"
+                name="manufactureraddress"
+                value={data.manufactureraddress || ""}
                 onChange={handleChange}
                 placeholder="Enter Address"
               />
-              <p>{errors.manufacturerAddress}</p>
+              <p>{errors.manufactureraddress}</p>
               <input
                 type="number"
-                name="manufacturerNumber"
+                name="manufacturernumber"
+                value={data.manufacturernumber || ""}
                 onChange={handleChange}
                 placeholder="Enter Contact Number"
               />
-              <p>{errors.manufacturerNumber}</p>
+              <p>{errors.manufacturernumber}</p>
             </div>
             <div className="add-button">
-              {edit ? (
-                <button type="button" onClick={handleEdit}>
-                  Edit
-                </button>
-              ) : (
-                <button type="button" onClick={handleSubmit}>
-                  Add Product
-                </button>
-              )}
+              <button type="button" onClick={handleSubmit}>
+                {edit ? "Edit Product" : "Add Product"}
+              </button>
             </div>
           </form>
         </div>

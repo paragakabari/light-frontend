@@ -1,15 +1,14 @@
-import { useCookies } from "react-cookie";
-import { redirects } from "./redirect";
+
 
 const AdminLayout = ({ children }) => {
-  const [cookies] = useCookies(["auth"]);
+  const cookies = localStorage.getItem('role');
   const isAuthenticated =
-    cookies.role ==='admin' 
+    cookies ==='admin' 
 
   if (isAuthenticated) return children;
 
   // return <Navigate to="/login" />;
-  return (window.location.href = redirects);
+  return (window.location.href = '/admin');
 };
 
 export default AdminLayout;

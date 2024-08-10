@@ -1,0 +1,29 @@
+@import "../../../styles/index.scss";
+
+.fontBold {
+    font-weight: 900 !important;
+}
+
+.css-1azl6jz-MuiTableCell-root,
+.css-1ygcj2i-MuiTableCell-root,
+.css-1ndpvdd-MuiTableCell-root {
+    font-weight: 900 !important;
+}
+
+.remove-btn {
+    background-color: red;
+    color: white;
+    border: 0px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 7px 20px;
+}
+
+.remove-btn {
+    transition: all .3s ease-in-out;
+    &:hover {
+
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+    }
+
+}
