@@ -23,8 +23,8 @@ function ProductDetailsModel(props) {
                   <td>{props.data.price}</td>
                 </tr>
                 <tr>
-                  <th>Seller Price:- </th>
-                  <td>{props.data.sellerPrice}</td>
+                  <th>Dealer Price:- </th>
+                  <td>{props.data.dealerPrice}</td>
                 </tr>
 
                 <tr>

@@ -88,13 +88,13 @@ function ProductModel(props) {
             <div className="sub-item border">
               <div>
                 <h3>{product.name}</h3>
-                <h4>&#8377;{product.price}</h4>
+                <h4>Price: &#8377;{product.price}</h4>
                 {localStorage.getItem("role") === "seller" && (
                   <h4 className="product-price">
-                    Seller Price: &#8377;{product.sellerPrice}
+                    Dealer Price: &#8377;{product.sellerPrice}
                   </h4>
                 )}
-                <p>{product.discription}</p>
+                <p>{product.description}</p>
               </div>
               <hr />
 

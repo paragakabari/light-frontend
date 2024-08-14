@@ -144,6 +144,39 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
+    path: "/admin/all-cart",
+    element: (
+      <AdminLayout>
+        <AdminLayouts />
+      
+
+      </AdminLayout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/admin/category",
+    element: (
+      <AdminLayout>
+        <AdminLayouts />
+      
+
+      </AdminLayout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/admin/branch",
+    element: (
+      <AdminLayout>
+        <AdminLayouts />
+      
+
+      </AdminLayout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
     path: "/admin/contact",
     element: (
       <AdminLayout>

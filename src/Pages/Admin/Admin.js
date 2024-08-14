@@ -9,6 +9,9 @@ import { useLocation } from "react-router-dom";
 import ProductList from "./ProductList";
 import Users from "./Users";
 import AdminContact from "./AdminContact";
+import AllCart from "./AllCart";
+import Category from "./Category";
+import Branch from "./Branch";
 
 export default function AdminLayouts({ children }) {
     const path = useLocation().pathname;
@@ -53,7 +56,10 @@ export default function AdminLayouts({ children }) {
     path == "/admin/dashboard" && <Dashboard />  ||
     path == "/admin/product" && <ProductList />  ||
     path == "/admin/users" && <Users />  ||
-    path == "/admin/contact" && <AdminContact />
+    path == "/admin/contact" && <AdminContact />||
+    path == "/admin/all-cart" && <AllCart />||
+    path == "/admin/category" && <Category />||
+    path == "/admin/branch" && <Branch />
 }
       </div>
     </div>

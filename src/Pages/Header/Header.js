@@ -134,7 +134,7 @@ export default function Header() {
             Profile
           </NavLink>
 
-          {localStorageData.role === "user" || localStorageData.role === "seller" ? (
+          {localStorageData.role === "user" || localStorageData.role === "dealer" ? (
             <NavLink
               to="/cart"
               onClick={() => setHeader(false)}

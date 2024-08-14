@@ -179,7 +179,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <img src={light} style={{ height: "500px" }} alt="" ></img>
+                  <img src={light} style={{ height: "500px" }} alt=""></img>
                 </div>
               </div>
             </div>
@@ -243,23 +243,23 @@ export default function Home() {
               {products?.map((product) => (
                 <div key={product.id} className="product-card">
                   <img
-                    src={ product.images[0]}
+                    src={product.images[0]}
                     alt={product.name}
                     className="product-image"
                   />
                   <div className="product-details">
                     <h3 className="product-name">{product.name}</h3>
                     <div className="product-price">
-                      
                       <span className="price">
-                        &#8377;{product.price}
-                        {localStorage.getItem("role") === "seller" && (
-                          <div className="product-price">
-                            Seller Price: &#8377;{product.sellerPrice}
-                          </div>
-                        )}
+                        Price: &#8377;{product.price}
                       </span>
+                      {localStorage.getItem("role") === "seller" && (
+                        <div className="seller-price">
+                          Dealer Price: &#8377;{product.sellerPrice}
+                        </div>
+                      )}
                     </div>
+                    <p>{product.description}</p>
                   </div>
                 </div>
               ))}

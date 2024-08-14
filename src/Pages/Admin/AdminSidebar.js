@@ -5,12 +5,12 @@ import toast from "react-hot-toast";
 export default function AdminSidebar({ isOpen, onClose }) {
   const router = useNavigate();
   const path = useLocation().pathname;
-const logout=()=>{
-  localStorage.clear();
-  sessionStorage.clear();
-  toast.success("Logout Success")
-  router("/admin")
-} 
+  const logout = () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    toast.success("Logout Success");
+    router("/admin");
+  };
   return (
     <div className="sidebarSection">
       <div className="sidebarTop">
@@ -47,6 +47,43 @@ const logout=()=>{
             </a>
           </div>
         </div>
+        <div className="sidebarMenu">
+          <div
+            className={`menuList ${
+              path === "/admin/category" ? "activeMenu" : ""
+            }`}
+          >
+            <a onClick={() => router("/admin/category")}>
+              {" "}
+              <p>Category</p>
+            </a>
+          </div>
+        </div>
+        <div className="sidebarMenu">
+          <div
+            className={`menuList ${
+              path === "/admin/all-cart" ? "activeMenu" : ""
+            }`}
+          >
+            <a onClick={() => router("/admin/all-cart")}>
+              {" "}
+              <p>All Cart</p>
+            </a>
+          </div>
+        </div>
+        <div className="sidebarMenu">
+          <div
+            className={`menuList ${
+              path === "/admin/branch" ? "activeMenu" : ""
+            }`}
+          >
+            <a onClick={() => router("/admin/branch")}>
+              {" "}
+              <p>Branch</p>
+            </a>
+          </div>
+        </div>
+
         <div className="sidebarMenu">
           <div
             className={`menuList ${

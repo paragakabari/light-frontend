@@ -19,7 +19,7 @@ export default function Signup() {
 
   const changeHandler = (e) => {
     if (e.target.name === "role") {
-      if (e.target.value === "seller") {
+      if (e.target.value === "dealer") {
         setUplodeFile(true);
       } else {
         setUplodeFile(false);
@@ -208,12 +208,12 @@ export default function Signup() {
               Select Role
             </option>
             <option value="user">User</option>
-            <option value="seller">Seller</option>
+            <option value="dealer">Dealer</option>
           </select>
           {uplodeFile ? (
             <>
               <label htmlFor="certificate">
-                <span>Upload Certificate</span>
+                <span>Upload Visiting Card</span>
                 <i className="fa-solid fa-arrow-up-from-bracket"></i>
                 <br />
                 <span style={{fontSize:"12px",fontStyle:"italic"}}>{fileName}</span>

@@ -39,24 +39,23 @@ export default function Product() {
               <>
                 <div className="product-card" key={i}>
                   <div className="product-image" onClick={() => modelShow(x)}>
-                    {x.images.map((y,index)=>{
-                      return(
-                        <img src={y} alt="product" key={index} />
-                      )
+                    {x.images.map((y, index) => {
+                      return <img src={y} alt="product" key={index} />;
                     })}
                   </div>
                   <span className="eye" onClick={() => modelShow(x)}>
                     <i className="fa-solid fa-eye"></i>
                   </span>
-               
+
                   <div className="product-details">
                     <div className="product-name">{x.name}</div>
-                    <div className="product-price">&#8377;{x.price}</div>
+                    <div className="product-price">Price: &#8377;{x.price}</div>
                     {localStorage.getItem("role") === "seller" && (
                       <div className="product-price">
-                        Seller Price: &#8377;{x.sellerPrice}
+                        Dealer Price: &#8377;{x.sellerPrice}
                       </div>
                     )}
+                    <div className="product-description">{x.description}</div>
                   </div>
                 </div>
               </>

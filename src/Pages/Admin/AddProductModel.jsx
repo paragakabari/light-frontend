@@ -83,7 +83,7 @@ function AddProductModel({
     if (!data.name) newErrors.name = "Product Name is Required!";
     if (!data.description) newErrors.description = "Description is Required!";
     if (!data.price) newErrors.price = "Price is Required!";
-    if (!data.sellerPrice) newErrors.sellerPrice = "Selling price is Required!";
+    if (!data.dealerPrice) newErrors.dealerPrice = "Selling price is Required!";
     if (images.length === 0) newErrors.images = "At least one image is Required!";
     if (!data.manufacturername)
       newErrors.manufacturername = "Manufacturer Name is Required!";
@@ -108,7 +108,7 @@ function AddProductModel({
     formData.append("name", data.name);
     formData.append("description", data.description);
     formData.append("price", data.price);
-    formData.append("sellerPrice", data.sellerPrice);
+    formData.append("dealerPrice", data.dealerPrice);
     // formData.append(`images`, formDataImages);
     // formDataImages.forEach((file, index) => {
     // });
@@ -173,12 +173,12 @@ function AddProductModel({
               <p>{errors.price}</p>
               <input
                 type="number"
-                name="sellerPrice"
-                value={data.sellerPrice || ""}
+                name="dealerPrice"
+                value={data.dealerPrice || ""}
                 onChange={handleChange}
                 placeholder="Enter Selling price"
               />
-              <p>{errors.sellerPrice}</p>
+              <p>{errors.dealerPrice}</p>
               <label htmlFor="images">
                 <span>Upload Product Images</span>
                 <i className="fas fa-images"></i>
