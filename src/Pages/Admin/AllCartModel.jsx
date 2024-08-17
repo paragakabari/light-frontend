@@ -1,7 +1,5 @@
 import React from "react";
 import "./userModel.scss";
-import { ApiPut } from "../../services/helpers/API/ApiData";
-import toast from "react-hot-toast";
 
 function AllCartModel({ userData, modalShowHandal }) {
   return (
@@ -40,8 +38,8 @@ function AllCartModel({ userData, modalShowHandal }) {
                         <tr>
                           <th>Images</th>
                           <td>
-                            {x?.productId?.images?.map((img, index) => (
-                              <img src={img} alt="Product Image" height={"200px"} width={"200px"} key={index} />
+                            {x?.productId?.images?.map((data, index) => (
+                              <img src={data} alt="Product" height={"200px"} width={"200px"} key={index} />
                             ))}
                           </td>
                         </tr>
