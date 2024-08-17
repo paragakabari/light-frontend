@@ -19,7 +19,7 @@ function Users() {
     try {
       const res = await ApiGet("users/get");
       setData(res.data);
-      
+
     } catch (err) {
       console.error("Error fetching users:", err);
     }
@@ -50,6 +50,31 @@ function Users() {
       name: "Email",
       selector: (row) => row.email,
       sortable: true,
+    },
+    {
+      name: "Status",
+      selector: (row) => {
+        if (row.status === "approved") {
+          return (
+            <p style={{ color: "green", textTransform: "uppercase", fontWeight: "700" }}>
+              {row.status}
+            </p>
+          );
+        } else if (row.status === "rejected") {
+          return (
+            <p style={{ color: "red", textTransform: "uppercase", fontWeight: "700" }}>
+              {row.status}
+            </p>
+          );
+        } else {
+          return (
+            <p style={{ color: "#1b3c5d", textTransform: "uppercase", fontWeight: "700" }}>
+              {row.status}
+            </p>
+          );
+        }
+      },
+      sortable: false,
     },
     {
       name: "Details",

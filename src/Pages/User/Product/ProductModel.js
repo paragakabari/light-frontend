@@ -26,7 +26,7 @@ function ProductModel(props) {
   const cartHandl = (id, quantity) => {
     if (
       localStorageData.role === "user" ||
-      localStorageData.role === "seller"
+      localStorageData.role === "dealer"
     ) {
       addCart(id, quantity);
     } else {
@@ -89,9 +89,9 @@ function ProductModel(props) {
               <div>
                 <h3>{product.name}</h3>
                 <h4>Price: &#8377;{product.price}</h4>
-                {localStorage.getItem("role") === "seller" && (
+                {localStorage.getItem("role") === "dealer" && (
                   <h4 className="product-price">
-                    Dealer Price: &#8377;{product.sellerPrice}
+                    Dealer Price: &#8377;{product.dealerPrice}
                   </h4>
                 )}
                 <p>{product.description}</p>

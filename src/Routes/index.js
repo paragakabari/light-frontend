@@ -14,6 +14,8 @@ import AdminLayout from "./AdminLayout";
 import DefaultLayout from "./DefaultLayout";
 import SignedInRoute from "./SignedInRoute";
 import Profile from "../Pages/User/Profile/Profile";
+import Branch from "../Pages/User/Branch/branch";
+
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +95,17 @@ export const router = createBrowserRouter([
     element: (
       <DefaultLayout>
         <Contact />
+      
+
+      </DefaultLayout>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/branch",
+    element: (
+      <DefaultLayout>
+        <Branch />
       
 
       </DefaultLayout>

@@ -56,11 +56,12 @@ export default function Header() {
               <NavLink to="/">Home</NavLink>
               <NavLink to="/product">Product</NavLink>
               <NavLink to="/about">About</NavLink>
+              <NavLink to="/branch">Branch</NavLink>
               <NavLink to="/contact">Contact</NavLink>
             </div>
 
             {localStorageData.role === "user" ||
-            localStorageData.role === "seller" ? (
+            localStorageData.role === "dealer" ? (
               <div className="profile">
                 <Button
                   aria-controls="simple-menu"
@@ -126,6 +127,9 @@ export default function Header() {
             About
           </NavLink>
 
+          <NavLink onClick={() => setHeader(false)} to="/branch">
+            Branch
+          </NavLink>
           <NavLink onClick={() => setHeader(false)} to="/contact">
             Contact
           </NavLink>

@@ -25,7 +25,7 @@
         box-shadow: 0 3px 66px rgba(0, 0, 0, .161);
         border-radius: 10px;
         position: relative;
-        
+
 
         .close-btn {
             position: relative;
@@ -47,12 +47,14 @@
                 gap: 10px;
                 grid-template-columns: repeat(1, 1fr);
 
-                input {
+                input , select {
                     padding: 15px;
                     border: 1px solid #bdbdbd;
                     border-radius: 10px;
                 }
-                p{
+
+
+                p {
                     color: red;
                     text-align: start;
                     font-size: 12px;
@@ -76,7 +78,8 @@
                     }
 
                 }
-                form{
+
+                form {
                     display: flex;
                     gap: 10px;
                     flex-direction: column;
@@ -86,6 +89,7 @@
             .add-button {
                 display: flex;
                 justify-content: end;
+
                 button {
                     padding: 10px 15px;
                     border: 0px;

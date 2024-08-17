@@ -185,57 +185,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="container">
-          <div className="policy-layout">
-            <div className="item">
-              <div className="icon-outer">
-                <div className="icon">
-                  <i className="fas fa-truck"></i>
-                </div>
-              </div>
-              <div className="text">
-                <h3>Free Shipping</h3>
-                <p>On all orders over $75.00</p>
-              </div>
-            </div>
-            <div className="item">
-              <div className="icon-outer">
-                <div className="icon">
-                  <i className="fas fa-undo"></i>
-                </div>
-              </div>
-
-              <div className="text">
-                <h3>30 Days Return</h3>
-                <p>Money back guarantee</p>
-              </div>
-            </div>
-            <div className="item">
-              <div className="icon-outer">
-                <div className="icon">
-                  <i className="fas fa-headphones"></i>
-                </div>
-              </div>
-
-              <div className="text">
-                <h3>24/7 Support</h3>
-                <p>Customer support</p>
-              </div>
-            </div>
-            <div className="item">
-              <div className="icon-outer">
-                <div className="icon">
-                  <i className="fas fa-lock"></i>
-                </div>
-              </div>
-
-              <div className="text">
-                <h3>Secure Payment</h3>
-                <p>100% secure payment</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      
         <div className="container">
           <div className="section-title">Top Products</div>
           <div className="product-slider">
@@ -253,9 +203,9 @@ export default function Home() {
                       <span className="price">
                         Price: &#8377;{product.price}
                       </span>
-                      {localStorage.getItem("role") === "seller" && (
+                      {localStorage.getItem("role") === "dealer" && (
                         <div className="seller-price">
-                          Dealer Price: &#8377;{product.sellerPrice}
+                          Dealer Price: &#8377;{product.dealerPrice}
                         </div>
                       )}
                     </div>
@@ -306,6 +256,57 @@ export default function Home() {
                 alt={offers[0].title}
                 className="offer-image"
               />
+            </div>
+          </div>
+        </div>
+        <div className="container">
+          <div className="policy-layout">
+            <div className="item">
+              <div className="icon-outer">
+                <div className="icon">
+                  <i className="fas fa-truck"></i>
+                </div>
+              </div>
+              <div className="text">
+                <h3>Free Shipping</h3>
+                <p>On all orders over $75.00</p>
+              </div>
+            </div>
+            <div className="item">
+              <div className="icon-outer">
+                <div className="icon">
+                  <i className="fas fa-undo"></i>
+                </div>
+              </div>
+
+              <div className="text">
+                <h3>30 Days Return</h3>
+                <p>Money back guarantee</p>
+              </div>
+            </div>
+            <div className="item">
+              <div className="icon-outer">
+                <div className="icon">
+                  <i className="fas fa-headphones"></i>
+                </div>
+              </div>
+
+              <div className="text">
+                <h3>24/7 Support</h3>
+                <p>Customer support</p>
+              </div>
+            </div>
+            <div className="item">
+              <div className="icon-outer">
+                <div className="icon">
+                  <i className="fas fa-lock"></i>
+                </div>
+              </div>
+
+              <div className="text">
+                <h3>Secure Payment</h3>
+                <p>100% secure payment</p>
+              </div>
             </div>
           </div>
         </div>

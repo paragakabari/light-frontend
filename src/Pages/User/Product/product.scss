@@ -2,6 +2,72 @@
 
 .heading {
   font-size: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  .sort-data {
+    gap: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    select {
+      padding: 5px 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #f8f8f8;
+      color: #333;
+      transition: all 0.3s ease;
+  
+      &:focus {
+        outline: none;
+        border-color: #ed3237;
+      }
+  
+      &:hover {
+        background-color: #f0f0f0;
+      }
+    }
+  
+    input {
+      padding: 5px 10px;
+      font-size: 16px;
+      border-radius: 5px 0 0 5px;
+      border: 1px solid #ccc;
+      border-right: none;
+      background-color: #f8f8f8;
+      color: #333;
+      transition: all 0.3s ease;
+  
+      &:focus {
+        outline: none;
+        border-color: #ed3237;
+      }
+    }
+  
+    button {
+      padding: 5px 15px;
+      font-size: 16px;
+      border-radius: 0 5px 5px 0;
+      border: 1px solid #ed3237;
+      background-color: #ed3237;
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+  
+      &:hover {
+        background-color: #c51d2d;
+        border-color: #c51d2d;
+      }
+  
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  
 }
 
 .product-grid {

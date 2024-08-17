@@ -36,8 +36,8 @@ export default function CartTable(props) {
   function subtotal(items) {
     return items
       .map(({ quantity, price, productId }) =>
-        localStorage.getItem("role") === "seller"
-          ? quantity * productId.sellerPrice
+        localStorage.getItem("role") === "dealer"
+          ? quantity * productId.dealerPrice
           : quantity * price
       )
       .reduce((sum, i) => sum + (i || 0), 0);
@@ -85,16 +85,16 @@ export default function CartTable(props) {
                   {row.productId.description}
                 </TableCell>
                 <TableCell align="right">{row.quantity}</TableCell>
-                {localStorage.getItem("role") === "seller" ? (
+                {localStorage.getItem("role") === "dealer" ? (
                   <TableCell align="right">
-                    {ccyFormat(row.productId.sellerPrice)}
+                    {ccyFormat(row.productId.dealerPrice)}
                   </TableCell>
                 ) : (
                   <TableCell align="right">{ccyFormat(row.price)}</TableCell>
                 )}
-                {localStorage.getItem("role") === "seller" ? (
+                {localStorage.getItem("role") === "dealer" ? (
                   <TableCell align="right">
-                    {ccyFormat(row.quantity * row.productId.sellerPrice)}
+                    {ccyFormat(row.quantity * row.productId.dealerPrice)}
                   </TableCell>
                 ) : (
                   <TableCell align="right">

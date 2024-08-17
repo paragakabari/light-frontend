@@ -1,11 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./layout.scss";
 
 export default function AdminHeader({ onToggleSidebar }) {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const toggleModal = () => {
-    setModalOpen(!isModalOpen);
-  };
+
   return (
     <div className="headerSection">
       <div className="headerLeft">

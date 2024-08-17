@@ -1,0 +1,105 @@
+@import "../../../styles/index.scss";
+
+
+.branch-list {
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 40px 20px;
+    border-radius: 8px;
+
+    @include breakpoint("md-max") {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .branch-card {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px #ed323844;
+        padding: 20px;
+        width: 300px;
+        transition: 0.5s ease-in-out all;
+
+        @include breakpoint("md-max") {
+            width: 100%;
+            text-align: start;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            background-color: #ed3237;
+        }
+
+        &:hover i {
+            transform: translateY(-5px);
+            color: #fff;
+        }
+
+        i {
+            padding: 20px 10px;
+            font-size: 40px;
+            color: #ed3237;
+            width: 100%;
+            text-align: center;
+            transition: 0.5s ease-in-out all;
+            @include breakpoint("md-max") {
+                text-align: start;
+            }
+        }
+
+        &:hover h3,
+        p {
+            color: #fff;
+        }
+
+        &:hover p {
+            color: #fff;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+            transition: 0.5s ease-in-out all;
+        }
+
+        p {
+            transition: 0.5s ease-in-out all;
+            font-size: 1rem;
+            color: #666;
+            text-align: start;
+            margin-bottom: 8px;
+        }
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-body {
+
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            flex-direction: column;
+
+            ul {
+                list-style-type: none;
+            }
+        }
+    }
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+p {
+    font-size: 1rem;
+    color: #666;
+    text-align: center;
+}

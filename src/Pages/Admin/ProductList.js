@@ -105,6 +105,7 @@ export default function ProductList() {
       name: "Action",
       cell: (row) => (
         <>
+        {/* {console.log(row.category)} */}
           <button className="editBtn" onClick={() => handleEdit(row)}>
             <i className="fa-solid fa-pen-to-square"></i>
           </button>

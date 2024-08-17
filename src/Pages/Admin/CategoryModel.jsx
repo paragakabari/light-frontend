@@ -46,7 +46,7 @@ function CategoryModel({
         apiCall(apiEndpoint,data)
             .then((res) => {
                 toast.success(
-                    edit ? "Product Edited Successfully!" : "Product Added Successfully!"
+                    edit ? "Category Edited Successfully!" : "Category Added Successfully!"
                 );
                 modalShowHandal();
                 getCategoryData();

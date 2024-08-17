@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./addProductModel.scss";
 import toast, { Toaster } from "react-hot-toast";
-import { ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
+import { ApiGet, ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
 import { API } from "../../services/config/APP/api.config";
 
 function AddProductModel({
@@ -14,9 +14,11 @@ function AddProductModel({
   const [formDataImages, setFormDataImages] = useState([]);
   const [data, setData] = useState(initialData || {});
   const [errors, setErrors] = useState({});
+  const [categories, setCategories] = useState([]);
   const apiHost = "http://" + API.host;
 
   useEffect(() => {
+    getCategory();
     if (edit && initialData) {
       setData(initialData);
       if (initialData.image) {
@@ -24,6 +26,16 @@ function AddProductModel({
       }
     }
   }, [edit, initialData, apiHost]);
+
+  const getCategory = () => {
+    ApiGet("categories/getAll")
+      .then((res) => {
+        setCategories(res.data); 
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -91,7 +103,8 @@ function AddProductModel({
       newErrors.manufactureraddress = "Manufacturer Address is Required!";
     if (!data.manufacturernumber)
       newErrors.manufacturernumber = "Manufacturer Number is Required!";
-
+    if (!data.category || data.category === "select")
+      newErrors.category = "Category is Required!"; 
     setErrors(newErrors);
     return newErrors;
   };
@@ -109,22 +122,20 @@ function AddProductModel({
     formData.append("description", data.description);
     formData.append("price", data.price);
     formData.append("dealerPrice", data.dealerPrice);
-    // formData.append(`images`, formDataImages);
-    // formDataImages.forEach((file, index) => {
-    // });
     formDataImages.forEach((file) => {
-      formData.append('images', file);
+      formData.append("images", file);
     });
     formData.append("manufacturername", data.manufacturername);
     formData.append("manufacturernumber", data.manufacturernumber);
     formData.append("manufactureraddress", data.manufactureraddress);
+    formData.append("category", data.categoryId); 
 
     const apiCall = edit ? ApiPut : ApiPost;
     const apiEndpoint = edit ? `products/update/${data.id}` : "products/create";
 
     apiCall(apiEndpoint, formData)
       .then((res) => {
-          toast.success(
+        toast.success(
           edit ? "Product Edited Successfully!" : "Product Added Successfully!"
         );
         modalShowHandal();
@@ -155,6 +166,7 @@ function AddProductModel({
                 placeholder="Enter Product title"
               />
               <p>{errors.name}</p>
+
               <input
                 type="text"
                 name="description"
@@ -163,6 +175,7 @@ function AddProductModel({
                 placeholder="Enter description"
               />
               <p>{errors.description}</p>
+
               <input
                 type="number"
                 name="price"
@@ -171,6 +184,7 @@ function AddProductModel({
                 placeholder="Enter price"
               />
               <p>{errors.price}</p>
+
               <input
                 type="number"
                 name="dealerPrice"
@@ -179,6 +193,23 @@ function AddProductModel({
                 placeholder="Enter Selling price"
               />
               <p>{errors.dealerPrice}</p>
+
+              <select
+                name="categoryId"
+                value={data.category || "select"}  
+                onChange={handleChange}
+              >
+                <option value="select" disabled>
+                  Select Category
+                </option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              
+              <p>{errors.categoryId}</p>
               <label htmlFor="images">
                 <span>Upload Product Images</span>
                 <i className="fas fa-images"></i>
@@ -194,18 +225,23 @@ function AddProductModel({
                 multiple
               />
               <div>
-
                 {data.images?.length > 0 &&
                   data.images.map((image, index) => (
                     <img
                       key={index}
                       alt={`Product ${index}`}
                       src={image}
-                      style={{ width: "100px", height: "100px", margin: "10px", cursor: "pointer" }}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        margin: "10px",
+                        cursor: "pointer",
+                      }}
                       onClick={() => handleImageRemove(index)}
                     />
                   ))}
               </div>
+
               <h5>Manufacturer Details</h5>
               <input
                 type="text"
@@ -215,6 +251,7 @@ function AddProductModel({
                 placeholder="Enter Name"
               />
               <p>{errors.manufacturername}</p>
+
               <input
                 type="text"
                 name="manufactureraddress"
@@ -223,6 +260,7 @@ function AddProductModel({
                 placeholder="Enter Address"
               />
               <p>{errors.manufactureraddress}</p>
+
               <input
                 type="number"
                 name="manufacturernumber"
@@ -232,6 +270,7 @@ function AddProductModel({
               />
               <p>{errors.manufacturernumber}</p>
             </div>
+
             <div className="add-button">
               <button type="button" onClick={handleSubmit}>
                 {edit ? "Edit Product" : "Add Product"}
