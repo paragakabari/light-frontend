@@ -30,20 +30,20 @@ export default function Footer() {
               <h2>Get In Touch!</h2>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <a href="#">(416) 888-0874</a>
+                <NavLink >(416) 888-0874</NavLink>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <a href="#">(416) 888-0874</a>
+                <NavLink >(416) 888-0874</NavLink>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-envelope"></i>
-                <a href="mailto:light@gmail.com">light@gmail.com</a>
+                <NavLink href="mailto:light@gmail.com">light@gmail.com</NavLink>
               </div>
             </div>
             <div>
               <h2>Contact Us</h2>
-              <a href="#">Get started today</a>
+              <NavLink >Get started today</NavLink>
               <div className="social-icon-alignment">
                 <i className="fa-brands fa-facebook"></i>
                 <i className="fa-brands fa-instagram"></i>
@@ -58,7 +58,7 @@ export default function Footer() {
         <div className="container">
           <p>
             Copyright © 2024 Ekanstech, All rights reserved. Powered by{" "}
-            <a href="#">Ekanstech Solustion</a>
+            <NavLink >Ekanstech Solustion</NavLink>
           </p>
         </div>
       </div>

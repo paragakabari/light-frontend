@@ -5,7 +5,6 @@ import toast from "react-hot-toast";
 
 function UserModel({ userData, modalShowHandal }) {
   const [status, setStatus] = useState(userData.status);
-
   const updateStatus = (data, newStatus) => {
     ApiPut("users/update-status/" + data.id, { status: newStatus })
       .then((res) => {
