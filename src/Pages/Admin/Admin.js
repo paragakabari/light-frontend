@@ -55,13 +55,13 @@ export default function AdminLayouts({ children }) {
       <div className={`${isSidebarOpen ? "layoutCustomRight" : "layoutCustomRights"}`}>
         <AdminHeader onToggleSidebar={toggleSidebar} />
 {
-    path == "/admin/dashboard" && <Dashboard />  ||
-    path == "/admin/product" && <ProductList />  ||
-    path == "/admin/users" && <Users />  ||
-    path == "/admin/contact" && <AdminContact />||
-    path == "/admin/all-cart" && <AllCart />||
-    path == "/admin/category" && <Category />||
-    path == "/admin/branch" && <Branch />
+    path === "/admin/dashboard" && <Dashboard />  ||
+    path === "/admin/product" && <ProductList />  ||
+    path === "/admin/users" && <Users />  ||
+    path === "/admin/contact" && <AdminContact />||
+    path === "/admin/all-cart" && <AllCart />||
+    path === "/admin/category" && <Category />||
+    path === "/admin/branch" && <Branch />
 }
       </div>
     </div>
