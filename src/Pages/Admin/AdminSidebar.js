@@ -53,10 +53,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/category" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/category")}>
+            <div onClick={() => router("/admin/category")}>
               {" "}
               <p>Category</p>
-            </a>
+            </div>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -65,10 +65,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/all-cart" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/all-cart")}>
+            <div onClick={() => router("/admin/all-cart")}>
               {" "}
               <p>All Cart</p>
-            </a>
+            </div>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -77,10 +77,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/branch" ? "activeMenu" : ""
             }`}
           >
-            <a onClick={() => router("/admin/branch")}>
+            <div onClick={() => router("/admin/branch")}>
               {" "}
               <p>Branch</p>
-            </a>
+            </div>
           </div>
         </div>
 
