@@ -38,12 +38,12 @@ export default function AdminLayouts({ children }) {
     setSidebarOpen(false);
   };
 
-  const routes = {
-    "/admin/dashboard": <Dashboard />,
-    "/admin/product": <ProductList />,
-    "/admin/users": <Users />,
-    "/admin/contact": <AdminContact />
-  };
+  // const routes = {
+  //   "/admin/dashboard": <Dashboard />,
+  //   "/admin/product": <ProductList />,
+  //   "/admin/users": <Users />,
+  //   "/admin/contact": <AdminContact />
+  // };
 
   // const componentToRender = routes[path] || <Dashboard />; // Default to Dashboard if path is not found
 
