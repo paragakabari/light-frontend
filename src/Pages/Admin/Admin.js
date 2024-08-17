@@ -45,7 +45,7 @@ export default function AdminLayouts({ children }) {
     "/admin/contact": <AdminContact />
   };
 
-  const componentToRender = routes[path] || <Dashboard />; // Default to Dashboard if path is not found
+  // const componentToRender = routes[path] || <Dashboard />; // Default to Dashboard if path is not found
 
   return (
     <div className="layoutCustomSection">
