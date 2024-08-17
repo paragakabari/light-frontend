@@ -1,5 +1,4 @@
 import "./branch.scss";
-import InVisionImage from "../../../assets/bg.webp";
 import { useEffect, useState } from "react";
 import { ApiGet } from "../../../services/helpers/API/ApiData";
 

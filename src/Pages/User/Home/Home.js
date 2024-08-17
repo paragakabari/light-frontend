@@ -175,7 +175,7 @@ export default function Home() {
                   <h1>Illuminate Your World with Image Light</h1>
                   <p>Discover the best LED lights for every need</p>
                   <div className="button-outline">
-                    <button>Contact Us</button>
+                    <NavLink to={"/contact"} >Contact Us</NavLink>
                   </div>
                 </div>
                 <div>
