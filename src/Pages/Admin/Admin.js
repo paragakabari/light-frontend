@@ -38,14 +38,14 @@ export default function AdminLayouts({ children }) {
     setSidebarOpen(false);
   };
 
-  const routes = {
-    "/admin/dashboard": <Dashboard />,
-    "/admin/product": <ProductList />,
-    "/admin/users": <Users />,
-    "/admin/contact": <AdminContact />
-  };
+  // const routes = {
+  //   "/admin/dashboard": <Dashboard />,
+  //   "/admin/product": <ProductList />,
+  //   "/admin/users": <Users />,
+  //   "/admin/contact": <AdminContact />
+  // };
 
-  const componentToRender = routes[path] || <Dashboard />; // Default to Dashboard if path is not found
+  // const componentToRender = routes[path] || <Dashboard />; // Default to Dashboard if path is not found
 
   return (
     <div className="layoutCustomSection">
@@ -55,13 +55,13 @@ export default function AdminLayouts({ children }) {
       <div className={`${isSidebarOpen ? "layoutCustomRight" : "layoutCustomRights"}`}>
         <AdminHeader onToggleSidebar={toggleSidebar} />
 {
-    path == "/admin/dashboard" && <Dashboard />  ||
-    path == "/admin/product" && <ProductList />  ||
-    path == "/admin/users" && <Users />  ||
-    path == "/admin/contact" && <AdminContact />||
-    path == "/admin/all-cart" && <AllCart />||
-    path == "/admin/category" && <Category />||
-    path == "/admin/branch" && <Branch />
+   (path === "/admin/dashboard" && <Dashboard />)  ||
+   (path === "/admin/product" && <ProductList />)  ||
+   (path === "/admin/users" && <Users />)  ||
+   (path === "/admin/contact" && <AdminContact />) ||
+   (path === "/admin/all-cart" && <AllCart />) ||
+   (path === "/admin/category" && <Category />) ||
+   (path === "/admin/branch" && <Branch />)
 }
       </div>
     </div>

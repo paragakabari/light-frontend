@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "./userModel.scss";
-import { ApiPut } from "../../services/helpers/API/ApiData";
 import toast from "react-hot-toast";
+import { ApiPut } from "../../services/helpers/API/ApiData";
+import "./userModel.scss";
 
 function UserModel({ userData, modalShowHandal }) {
   const [status, setStatus] = useState(userData.status);
@@ -76,7 +76,7 @@ function UserModel({ userData, modalShowHandal }) {
                 <tr>
                   <th>Document:</th>
                   <td>
-                    <a href={`${userData.documentUrl}`} target="_blank">
+                    <a href={`${userData.documentUrl}`} >
                       <img
                         src={`${userData.documentUrl}`}
                         alt="Document"
