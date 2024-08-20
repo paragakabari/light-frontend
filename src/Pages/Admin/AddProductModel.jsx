@@ -130,7 +130,7 @@ function AddProductModel({
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length === 0) {
-      setLoading(true); // Show spinner
+      // setLoading(true); // Show spinner
       submitForm();
     }
   };
@@ -163,7 +163,7 @@ function AddProductModel({
         toast.error("Error saving product!");
       })
       .finally(() => {
-        setLoading(false); // Hide spinner
+        // setLoading(false); // Hide spinner
       });
   };
 
