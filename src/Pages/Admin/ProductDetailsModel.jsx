@@ -8,7 +8,7 @@ function ProductDetailsModel(props) {
 
   useEffect(() => {
     getCategory();
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const getCategory = () => {
     ApiGet("categories/getAll")
