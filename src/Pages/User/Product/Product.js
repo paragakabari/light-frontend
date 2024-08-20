@@ -78,7 +78,6 @@ export default function Product() {
       .then((res) => {
         setProducts(res.data.results);
         setsearchInput('')
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);

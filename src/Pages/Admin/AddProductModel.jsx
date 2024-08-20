@@ -3,6 +3,7 @@ import "./addProductModel.scss";
 import toast, { Toaster } from "react-hot-toast";
 import { ApiGet, ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
 import { API } from "../../services/config/APP/api.config";
+import SpinnerCom from "../Comman/SpinnerCom";
 
 function AddProductModel({
   edit,
@@ -12,33 +13,43 @@ function AddProductModel({
 }) {
   const [images, setImages] = useState([]);
   const [formDataImages, setFormDataImages] = useState([]);
-  const [data, setData] = useState(initialData || {});
+  const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
   const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(false);
   const apiHost = "http://" + API.host;
 
   useEffect(() => {
     getCategory();
+
     if (edit && initialData) {
-      setData(initialData);
+      setData({
+        ...initialData,
+        category: initialData.category || "select",
+      });
+
       if (initialData.image) {
         setImages([apiHost + initialData.image]);
       }
+    } else {
+      // Initialize form for new product
+      setData({
+        name: "",
+        description: "",
+        price: "",
+        dealerPrice: "",
+        categoryId: "select",
+        manufacturername: "",
+        manufactureraddress: "",
+        manufacturernumber: "",
+        images: [],
+      });
     }
   }, [edit, initialData, apiHost]);
 
-  const getCategory = () => {
-    ApiGet("categories/getAll")
-      .then((res) => {
-        setCategories(res.data); 
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  };
-
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
+
     if (type === "file") {
       handleFileChange(files);
     } else {
@@ -47,6 +58,16 @@ function AddProductModel({
         [name]: value,
       }));
     }
+  };
+
+  const getCategory = () => {
+    ApiGet("categories/getAll")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   const handleFileChange = (files) => {
@@ -97,21 +118,19 @@ function AddProductModel({
     if (!data.price) newErrors.price = "Price is Required!";
     if (!data.dealerPrice) newErrors.dealerPrice = "Selling price is Required!";
     if (images.length === 0) newErrors.images = "At least one image is Required!";
-    if (!data.manufacturername)
-      newErrors.manufacturername = "Manufacturer Name is Required!";
-    if (!data.manufactureraddress)
-      newErrors.manufactureraddress = "Manufacturer Address is Required!";
-    if (!data.manufacturernumber)
-      newErrors.manufacturernumber = "Manufacturer Number is Required!";
-    if (!data.category || data.category === "select")
-      newErrors.category = "Category is Required!"; 
+    if (!data.manufacturername) newErrors.manufacturername = "Manufacturer Name is Required!";
+    if (!data.manufactureraddress) newErrors.manufactureraddress = "Manufacturer Address is Required!";
+    if (!data.manufacturernumber) newErrors.manufacturernumber = "Manufacturer Number is Required!";
+    if (!data.category || data.category === "select") newErrors.categoryId = "Category is Required!";
     setErrors(newErrors);
     return newErrors;
   };
 
   const handleSubmit = () => {
     const validationErrors = validate();
+
     if (Object.keys(validationErrors).length === 0) {
+      setLoading(true); // Show spinner
       submitForm();
     }
   };
@@ -128,22 +147,23 @@ function AddProductModel({
     formData.append("manufacturername", data.manufacturername);
     formData.append("manufacturernumber", data.manufacturernumber);
     formData.append("manufactureraddress", data.manufactureraddress);
-    formData.append("category", data.categoryId); 
+    formData.append("category", data.category);
 
     const apiCall = edit ? ApiPut : ApiPost;
     const apiEndpoint = edit ? `products/update/${data.id}` : "products/create";
 
     apiCall(apiEndpoint, formData)
       .then((res) => {
-        toast.success(
-          edit ? "Product Edited Successfully!" : "Product Added Successfully!"
-        );
+        toast.success(edit ? "Product Edited Successfully!" : "Product Added Successfully!");
         modalShowHandal();
         getProductData();
       })
       .catch((err) => {
         console.error("Error:", err);
         toast.error("Error saving product!");
+      })
+      .finally(() => {
+        setLoading(false); // Hide spinner
       });
   };
 
@@ -155,6 +175,9 @@ function AddProductModel({
           <button className="close-btn" onClick={modalShowHandal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
+
+          {loading && <SpinnerCom />} {/* Conditionally render the spinner */}
+
           <h2>{edit ? "Edit Product" : "Add Product"}</h2>
           <form className="form">
             <div className="inputfield">
@@ -195,8 +218,8 @@ function AddProductModel({
               <p>{errors.dealerPrice}</p>
 
               <select
-                name="categoryId"
-                value={data.category || "select"}  
+                name="category"
+                value={data.category ? data.category : data.category || "select"}
                 onChange={handleChange}
               >
                 <option value="select" disabled>
@@ -208,8 +231,8 @@ function AddProductModel({
                   </option>
                 ))}
               </select>
-              
-              <p>{errors.categoryId}</p>
+              <p>{errors.category}</p>
+
               <label htmlFor="images">
                 <span>Upload Product Images</span>
                 <i className="fas fa-images"></i>

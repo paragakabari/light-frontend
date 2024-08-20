@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./productDetailsModel.scss";
+import { ApiGet } from "../../services/helpers/API/ApiData";
+import toast from "react-hot-toast";
 
 function ProductDetailsModel(props) {
+  const [category, setCategory] = useState("");
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
+  const getCategory = () => {
+    ApiGet("categories/getAll")
+      .then((res) => {
+        const matchedCategory = res.data.find(x => x.id === props.data.category);
+        if (matchedCategory) {
+          setCategory(matchedCategory.name);
+        } else {
+          setCategory("Unknown Category");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  };
+
   return (
     <>
       <div className="popup-overlay">
         <div className="popup">
-
           <button className="close-btn" onClick={props.modalShowHandal}>
             <i className="fa-solid fa-xmark"></i>
           </button>
@@ -26,26 +48,26 @@ function ProductDetailsModel(props) {
                   <th>Dealer Price:- </th>
                   <td>{props.data.dealerPrice}</td>
                 </tr>
-
                 <tr>
                   <th>Description:- </th>
                   <td>{props.data.description}</td>
                 </tr>
                 <tr>
+                  <th>Category:- </th>
+                  <td>{category}</td>
+                </tr>
+                <tr>
                   <th>Image:- </th>
                   <td className="img-contener">
-                    {props.data.images?.map((x, i) => {
-                      return (
-                        <div href={x} target="" key={i}>
-                          <img
-                            
-                            src={x}
-                            alt="Document"
-                            className="document-img"
-                          />
-                        </div>
-                      )
-                    })}
+                    {props.data.images?.map((x, i) => (
+                      <div key={i}>
+                        <img
+                          src={x}
+                          alt="Product"
+                          className="document-img"
+                        />
+                      </div>
+                    ))}
                   </td>
                 </tr>
                 <tr>
