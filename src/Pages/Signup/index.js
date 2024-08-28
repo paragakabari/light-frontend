@@ -12,94 +12,95 @@ export default function Signup() {
   const [errors, setErrors] = useState({});
   const [passwordVisible, setPasswordVisible] = useState(false); // Added state for password visibility
   const [fileName, setFileName] = useState("");
-  let checkName = /^[A-Za-z\s]*$/;
   const navigate = useNavigate();
-  let passwordRegex =/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:"<>?.])[A-Za-z\d!@#$%^&*()_+{}:"<>?.]{9,}$/;
+
+  const nameRegex = /^[A-Za-z\s]*$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:"<>?.])[A-Za-z\d!@#$%^&*()_+{}:"<>?.]{9,}$/;
+  const phoneRegex = /^\d{10}$/; // Ensure phone number is exactly 10 digits
 
   const changeHandler = (e) => {
-    if (e.target.name === "role") {
-      if (e.target.value === "dealer") {
-        setUplodeFile(true);
-      } else {
-        setUplodeFile(false);
-      }
+    const { name, value, files } = e.target;
+
+    if (name === "role") {
+      setUplodeFile(value === "dealer");
     }
 
-    if (e.target.name === "certificate") {
-      signupData[e.target.name] = e.target.files[0];
-      setFileName(e.target.files[0].name);
+    if (name === "certificate") {
+      signupData[name] = files[0];
+      setFileName(files[0].name);
     } else {
-      signupData[e.target.name] = e.target.value;
-      blanck[e.target.name] = "";
+      signupData[name] = value;
+      blanck[name] = "";
     }
+
     setSignupData({ ...signupData });
     setBlanck({ ...blanck });
 
-    // ==-=-=-=-=-=-=-=-=-=-=-=-=-=- onchange Validation Start -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    // Validate fields on change
+    validateField(name, value);
+  };
 
-    // -=-=-=-=-=- fullName -=-=-=-=-=-=
-    if (e.target.name === "fullName") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = "Full Name is required !";
-      } else if (!checkName.test(signupData[e.target.name])) {
-        errors[e.target.name] = "Full Name not Valid !";
-      } else {
-        errors[e.target.name] = "";
-      }
-    }
+  const validateField = (name, value) => {
+    let errorMsg = "";
 
-    // -=-=-=-=-=- email -=-=-=-=-=-=
-    if (e.target.name === "email") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = e.target.name + " is required !";
-      } else if (
-        !(
-          e.target.value.includes("@gmail") ||
-          e.target.value.includes("@outlook") ||
-          e.target.value.includes("@mailinator") ||
-          e.target.value.includes("@fuzitea")
-        )
-      ) {
-        errors[e.target.name] = "Please Enter Valid " + e.target.name + " !";
-      } else {
-        errors[e.target.name] = "";
-      }
-    }
-
-    // -=-=-=-=-=-Password -=-=-=-=-=-=
-    if (e.target.name === "password") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = e.target.name + " are required !";
-      } else if (!passwordRegex.test(signupData.password)) {
-        errors[e.target.name] = (
-          <ul style={{ paddingLeft: "20px" }}>
-            <li>Password must be at least 9 characters long </li>
-            <li>Contain at least one special character</li>
-            <li>Contain at least one number</li>
-            <li>Contain at least one uppercase letter</li>
-          </ul>
-        );
-      } else {
-        errors[e.target.name] = "";
-      }
-    }
-
-    // -=-=-=-=-=-certificate -=-=-=-=-=-=
-    if (e.target.name === "certificate") {
-      if (uplodeFile) {
-        if (!e.target.files[0]) {
-          errors[e.target.name] = e.target.name + " are required !";
-        } else {
-          errors[e.target.name] = "";
+    switch (name) {
+      case "fullName":
+        if (!value) {
+          errorMsg = "Full Name is required!";
+        } else if (!nameRegex.test(value)) {
+          errorMsg = "Full Name is not valid!";
         }
-      } else {
-        errors[e.target.name] = "";
-      }
+        break;
+
+      case "email":
+        if (!value) {
+          errorMsg = "Email is required!";
+        } else if (
+          !/@(gmail|outlook|mailinator|fuzitea)\.com$/.test(value)
+        ) {
+          errorMsg = "Please enter a valid Email!";
+        }
+        break;
+
+      case "phone":
+        if (!value) {
+          errorMsg = "Phone Number is required!";
+        } else if (!phoneRegex.test(value)) {
+          errorMsg = (
+            <ul style={{ listStyleType: "none" }}>
+              <li>Example: 90xxxxxx21</li>
+              <li>Please enter a valid Phone Number</li>
+            </ul>
+          );
+        }
+        break;
+
+      case "password":
+        if (!value) {
+          errorMsg = "Password is required!";
+        } else if (!passwordRegex.test(value)) {
+          errorMsg = (
+            <ul style={{ paddingLeft: "20px" }}>
+              <li>Password must be at least 9 characters long</li>
+              <li>Contain at least one special character</li>
+              <li>Contain at least one number</li>
+              <li>Contain at least one uppercase letter</li>
+            </ul>
+          );
+        }
+        break;
+
+      case "certificate":
+        if (uplodeFile && !signupData[name]) {
+          errorMsg = "Certificate is required!";
+        }
+        break;
+
+      default:
+        break;
     }
 
-    setErrors({ ...errors });
-
-    // ==-=-=-=-=-=-=-=-=-=-=-=-=-=- onchange Validation Over -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMsg }));
   };
 
   const addUser = () => {
@@ -112,9 +113,8 @@ export default function Signup() {
 
     ApiPost("auth/register", formData)
       .then((res) => {
-        toast.success("Account Created Successfully !");
+        toast.success("Account Created Successfully!");
         setSignupData({ ...blanck });
-
         navigate("/login");
       })
       .catch((err) => {
@@ -123,26 +123,28 @@ export default function Signup() {
   };
 
   const submitHandler = () => {
-    if (!signupData.fullName) {
-      errors.fullName = "Full Name is required !";
+    const requiredFields = ["fullName", "phone", "email", "password"];
+    let isValid = true;
+
+    requiredFields.forEach((field) => {
+      if (!signupData[field]) {
+        isValid = false;
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: `${field.charAt(0).toUpperCase() + field.slice(1)} is required!`,
+        }));
+      }
+    });
+
+    if (uplodeFile && !signupData.certificate) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        certificate: "Certificate is required!",
+      }));
+      isValid = false;
     }
 
-    if (!signupData.email) {
-      errors.email = "Email is required !";
-    }
-
-    if (!signupData.password) {
-      errors.password = "Password is required !";
-    }
-
-    if (!signupData.certificate && uplodeFile) {
-      errors.certificate = "Certificate is required !";
-    } else {
-      errors.certificate = "";
-    }
-    setErrors({ ...errors });
-
-    if (Object.values(errors).every((x) => x === "")) {
+    if (isValid && Object.values(errors).every((x) => x === "")) {
       addUser();
     }
   };
@@ -166,6 +168,22 @@ export default function Signup() {
             onChange={changeHandler}
           />
           <span className="errorMsg">{errors.fullName}</span>
+
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            name="phone"
+            value={signupData.phone || ""}
+            maxLength="10"
+            onKeyPress={(event) => {
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+            }}
+            onChange={changeHandler}
+          />
+          <span className="errorMsg">{errors.phone}</span>
+
           <input
             type="email"
             placeholder="yourmail@email.com"
@@ -174,6 +192,7 @@ export default function Signup() {
             onChange={changeHandler}
           />
           <span className="errorMsg">{errors.email}</span>
+
           <div className="password-container">
             <input
               type={passwordVisible ? "text" : "password"}
@@ -209,7 +228,7 @@ export default function Signup() {
             <option value="user">User</option>
             <option value="dealer">Dealer</option>
           </select>
-          {uplodeFile ? (
+          {uplodeFile && (
             <>
               <label htmlFor="certificate">
                 <span>Upload Visiting Card</span>
@@ -229,8 +248,6 @@ export default function Signup() {
               />
               <span className="errorMsg">{errors.certificate}</span>
             </>
-          ) : (
-            ""
           )}
           <button type="button" onClick={submitHandler}>
             Sign Up
