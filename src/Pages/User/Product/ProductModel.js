@@ -62,27 +62,29 @@ function ProductModel(props) {
                 {imgs.map((x, i) => {
                   const isActive = x === activeImg;
                   return (
-                    <img
-                    key={i}
-                    className={`product-other-image ${
-                      isActive ? "active" : ""
-                    }`}
-                    src={x}
-                    alt="Product"
-                    onClick={() => {
-                      setMainImg(x);
-                      setActiveImg(x);
-                    }}
-                    />
+                      <img
+                        key={i}
+                        className={`product-other-image ${
+                          isActive ? "active" : ""
+                        }`}
+                        src={x}
+                        alt="Product"
+                        onClick={() => {
+                          setMainImg(x);
+                          setActiveImg(x);
+                        }}
+                      />
                   );
                 })}
               </div>
               <div className="border">
-                <img
-                  src={mainImg}
-                  className="display-image"
-                  alt="display-image"
-                />
+                <a href={mainImg} target="_blank">
+                  <img
+                    src={mainImg}
+                    className="display-image"
+                    alt="display-image"
+                  />
+                </a>
               </div>
             </div>
             <div className="sub-item border">

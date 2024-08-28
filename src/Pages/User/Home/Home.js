@@ -195,11 +195,13 @@ export default function Home() {
                 <div className="product-slider">
                   {products?.map((product) => (
                     <div key={product.id} className="product-card">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="product-image"
-                      />
+                      <a href={product.images[0]} target="_blank">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="product-image"
+                        />
+                      </a>
                       <div className="product-details">
                         <h3 className="product-name">{product.name}</h3>
                         <div className="product-price">
