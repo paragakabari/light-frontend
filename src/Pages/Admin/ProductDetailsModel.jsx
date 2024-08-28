@@ -8,7 +8,7 @@ function ProductDetailsModel(props) {
 
   useEffect(() => {
     getCategory();
-  },[]); 
+  }); 
 
   const getCategory = () => {
     ApiGet("categories/getAll")
