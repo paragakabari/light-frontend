@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../LogIn/login.scss";
 import logo from "../../assets/img/Logo.png";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ApiPost } from "../../services/helpers/API/ApiData";
 
 export default function Signup() {
@@ -254,7 +254,7 @@ export default function Signup() {
           </button>
         </form>
         <p>
-          Already have an account? <a href="/login">Sign In</a>
+          Already have an account? <NavLink to="/login">Sign In</NavLink>
         </p>
       </div>
     </div>

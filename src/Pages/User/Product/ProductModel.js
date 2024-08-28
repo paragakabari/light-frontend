@@ -78,7 +78,7 @@ function ProductModel(props) {
                 })}
               </div>
               <div className="border">
-                <a href={mainImg} target="_blank">
+                <a href={mainImg} target="_blank" rel="noopener noreferrer">
                   <img
                     src={mainImg}
                     className="display-image"
