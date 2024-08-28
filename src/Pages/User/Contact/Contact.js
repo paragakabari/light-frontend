@@ -63,10 +63,7 @@ export default function Contact() {
               Let Us Create <br /> Your Succes
             </h2>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+            Discover the perfect blend of style and functionality with IMAGE LIGHT—your destination for exceptional lighting, decor, and electrical solutions.
             </p>
           </div>
           <div className="grid-items">
