@@ -63,9 +63,9 @@ export default function ProductList() {
   };
 
   const getProduct = () => {
-    ApiGet("products/get")
+    ApiGet("products/getAll")
       .then((res) => {
-        setProducts(res.data.results);
+        setProducts(res.data);
       })
       .catch((err) => {
         toast.error(err);

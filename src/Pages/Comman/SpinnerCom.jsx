@@ -1,15 +1,13 @@
-import { useState } from "react";
 import './SpinnerCom.scss';
 
 function SpinnerCom() {
-  const [spinnerWorking, setSpinnerWorking] = useState(true);
+  const spinnerWorking = true;
 
   return (
     <>
       {spinnerWorking && (
         <div className="spinner-overlay">
-          <div className="spinner"></div>
-        </div>
+          <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>        </div>
       )}
     </>
   );

@@ -3,7 +3,7 @@ import "./addProductModel.scss";
 import toast, { Toaster } from "react-hot-toast";
 import { ApiGet, ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
 import { API } from "../../services/config/APP/api.config";
-// import SpinnerCom from "../Comman/SpinnerCom";
+import SpinnerCom from "../Comman/SpinnerCom";
 
 function AddProductModel({
   edit,
@@ -16,7 +16,7 @@ function AddProductModel({
   const [data, setData] = useState({});
   const [errors, setErrors] = useState({});
   const [categories, setCategories] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const apiHost = "http://" + API.host;
 
   useEffect(() => {
@@ -32,7 +32,6 @@ function AddProductModel({
         setImages([apiHost + initialData.image]);
       }
     } else {
-      // Initialize form for new product
       setData({
         name: "",
         description: "",
@@ -130,7 +129,7 @@ function AddProductModel({
     const validationErrors = validate();
 
     if (Object.keys(validationErrors).length === 0) {
-      // setLoading(true); // Show spinner
+      setLoading(true);   
       submitForm();
     }
   };
@@ -163,7 +162,7 @@ function AddProductModel({
         toast.error("Error saving product!");
       })
       .finally(() => {
-        // setLoading(false); // Hide spinner
+        setLoading(false); // Hide spinner
       });
   };
 
@@ -176,7 +175,7 @@ function AddProductModel({
             <i className="fa-solid fa-xmark"></i>
           </button>
 
-          {/* {loading && <SpinnerCom />} Conditionally render the spinner */}
+         
 
           <h2>{edit ? "Edit Product" : "Add Product"}</h2>
           <form className="form">
@@ -299,6 +298,7 @@ function AddProductModel({
                 {edit ? "Edit Product" : "Add Product"}
               </button>
             </div>
+            {loading && <SpinnerCom />}
           </form>
         </div>
       </div>

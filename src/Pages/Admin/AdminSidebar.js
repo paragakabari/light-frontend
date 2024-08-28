@@ -8,7 +8,7 @@ export default function AdminSidebar({ isOpen, onClose }) {
   const logout = () => {
     localStorage.clear();
     sessionStorage.clear();
-    toast.success("Logout Success");
+    toast.success("Logout Successfully");
     router("/admin");
   };
   return (
@@ -53,10 +53,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/category" ? "activeMenu" : ""
             }`}
           >
-            <div onClick={() => router("/admin/category")}>
+            <NavLink onClick={() => router("/admin/category")}>
               {" "}
               <p>Category</p>
-            </div>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -65,10 +65,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/all-cart" ? "activeMenu" : ""
             }`}
           >
-            <div onClick={() => router("/admin/all-cart")}>
+            <NavLink onClick={() => router("/admin/all-cart")}>
               {" "}
               <p>All Cart</p>
-            </div>
+            </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
@@ -77,10 +77,10 @@ export default function AdminSidebar({ isOpen, onClose }) {
               path === "/admin/branch" ? "activeMenu" : ""
             }`}
           >
-            <div onClick={() => router("/admin/branch")}>
+            <NavLink onClick={() => router("/admin/branch")}>
               {" "}
               <p>Branch</p>
-            </div>
+            </NavLink>
           </div>
         </div>
 

@@ -28,7 +28,7 @@ export default function Branch() {
         {branchList.length > 0 ? (
           branchList.map((branch, index) => (
             <div className="branch-card" key={index}>
-              <i class="fa-solid fa-store"></i>
+              <i className="fa-solid fa-store"></i>
               <div className="card-body">
                 <ul>
                   <li>

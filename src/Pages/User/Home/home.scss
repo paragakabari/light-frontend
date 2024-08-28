@@ -96,7 +96,11 @@
 
 
 }
-
+.sliderOuter{
+  .product-slider{
+    width: 50%;
+  }
+}
 .product-slider {
   padding: 0 0 50px 0;
   position: relative;
@@ -104,7 +108,7 @@
   .slick-slide {
     padding: 10px !important;
   }
-
+  
   .slick-arrow {
     position: absolute;
     height: 30px;
@@ -119,12 +123,12 @@
     text-align: center;
     transition: 0.3s ease-in-out;
   }
-
+  
   .slick-arrow:hover {
     background-color: #ed3337;
     color: #fff;
   }
-
+  
   .slick-arrow-left {
     right: 50px;
     top: -5%;
@@ -138,7 +142,7 @@
     transform: translateY(-50%);
     z-index: 1;
   }
-
+  
   .product-card {
     text-align: center;
     position: relative;
@@ -148,7 +152,9 @@
     background-color: #fff;
     transition: transform 1.2s;
     overflow: hidden;
+    width: 50%;
 
+    
     @include breakpoint("md-max") {
       padding: 80px;
     }
@@ -159,11 +165,7 @@
       height: 170px;
       border-radius: 10px;
       // margin-bottom: 15px;
-      transition: transform .3s;
-
-      @include breakpoint("md-max") {
-        height: 380px;
-      }
+      transition: transform .3s
     }
 
     .product-details {
@@ -176,6 +178,14 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
 
+      .productDescripption {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+
       .product-name {
         font-size: 16px;
         margin-bottom: 10px;
@@ -184,6 +194,7 @@
 
       .product-price {
         padding-bottom: 20px;
+
         .original-price {
           text-decoration: line-through;
           color: #999;

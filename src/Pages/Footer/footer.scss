@@ -42,22 +42,22 @@ footer {
                 text-align: start;
             }
         }
-
+        
         a:last-child {
             padding: 0;
         }
-
+        
         .icon-text {
             display: flex;
             align-items: center;
             padding: 0 0 20px 0;
             gap: 12px;
-
+            
             i {
                 color: #e01a33;
             }
         }
-
+        
         a {
             display: block;
             font-size: 14px;
@@ -68,13 +68,16 @@ footer {
             position: relative;
             padding: 0 0 20px 0;
         }
-
+        
         .first-contnet {
             p {
                 font-size: 14px;
                 line-height: 28px;
                 color: #777777;
                 max-width: 350px;
+                @include breakpoint("md-max") {
+                    text-align: justify;
+                }
             }
 
             .logo {

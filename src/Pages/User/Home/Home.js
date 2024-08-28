@@ -21,7 +21,7 @@ const NextArrow = (props) => {
 };
 
 const PrevArrow = (props) => {
-  const {  style, onClick } = props;
+  const { style, onClick } = props;
   return (
     <div
       className="slick-arrow slick-arrow-left"
@@ -42,6 +42,7 @@ export default function Home() {
   const getProduct = () => {
     ApiGet("products/getAll")
       .then((res) => {
+        console.log("rweas", res);
         setProducts(res.data);
       })
       .catch((err) => {
@@ -175,7 +176,7 @@ export default function Home() {
                   <h1>Illuminate Your World with Image Light</h1>
                   <p>Discover the best LED lights for every need</p>
                   <div className="button-outline">
-                    <NavLink to={"/contact"} >Contact Us</NavLink>
+                    <NavLink to={"/contact"}>Contact Us</NavLink>
                   </div>
                 </div>
                 <div>
@@ -185,41 +186,85 @@ export default function Home() {
             </div>
           </div>
         </div>
-      
+
         <div className="container">
           <div className="section-title">Top Products</div>
-          <div className="product-slider">
-            <Slider {...settings}>
-              {products?.map((product) => (
-                <div key={product.id} className="product-card">
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="product-image"
-                  />
-                  <div className="product-details">
-                    <h3 className="product-name">{product.name}</h3>
-                    <div className="product-price">
-                      <span className="price">
-                        Price: &#8377;{product.price}
-                      </span>
-                      {localStorage.getItem("role") === "dealer" && (
-                        <div className="seller-price">
-                          Dealer Price: &#8377;{product.dealerPrice}
+          {products?.length <= 1 ? (
+            <>
+              <div className="sliderOuter">
+                <div className="product-slider">
+                  {products?.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="product-image"
+                      />
+                      <div className="product-details">
+                        <h3 className="product-name">{product.name}</h3>
+                        <div className="product-price">
+                          <span className="price">
+                            Price: &#8377;{product.price}
+                          </span>
+                          {localStorage.getItem("role") === "dealer" && (
+                            <div className="seller-price">
+                              Dealer Price: &#8377;{product.dealerPrice}
+                            </div>
+                          )}
                         </div>
-                      )}
+                        <span className="productDescripption">
+                          {product.description}
+                        </span>
+                      </div>
                     </div>
-                    <p>{product.description}</p>
+                  ))}
+
+                  <div className="all-product-btn-outer">
+                    <NavLink to="/product" className="all-product-btn">
+                      View All Products
+                    </NavLink>
                   </div>
                 </div>
-              ))}
-            </Slider>
-            <div className="all-product-btn-outer">
-              <NavLink to="/product" className="all-product-btn">
-                View All Products
-              </NavLink>
-            </div>
-          </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="product-slider">
+                <Slider {...settings}>
+                  {products?.map((product) => (
+                    <div key={product.id} className="product-card">
+                      <img
+                        src={product.images[0]}
+                        alt={product.name}
+                        className="product-image"
+                      />
+                      <div className="product-details">
+                        <h3 className="product-name">{product.name}</h3>
+                        <div className="product-price">
+                          <span className="price">
+                            Price: &#8377;{product.price}
+                          </span>
+                          {localStorage.getItem("role") === "dealer" && (
+                            <div className="seller-price">
+                              Dealer Price: &#8377;{product.dealerPrice}
+                            </div>
+                          )}
+                        </div>
+                        <span className="productDescripption">
+                          {product.description}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </Slider>
+                <div className="all-product-btn-outer">
+                  <NavLink to="/product" className="all-product-btn">
+                    View All Products
+                  </NavLink>
+                </div>
+              </div>
+            </>
+          )}
         </div>
         <div className="container">
           <div className="testimonials-section">

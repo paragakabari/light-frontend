@@ -6,12 +6,13 @@
   justify-content: space-between;
   align-items: center;
   flex-direction: row;
+
   .sort-data {
     gap: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-  
+
     select {
       padding: 5px 10px;
       font-size: 16px;
@@ -20,17 +21,17 @@
       background-color: #f8f8f8;
       color: #333;
       transition: all 0.3s ease;
-  
+
       &:focus {
         outline: none;
         border-color: #ed3237;
       }
-  
+
       &:hover {
         background-color: #f0f0f0;
       }
     }
-  
+
     input {
       padding: 5px 10px;
       font-size: 16px;
@@ -40,13 +41,13 @@
       background-color: #f8f8f8;
       color: #333;
       transition: all 0.3s ease;
-  
+
       &:focus {
         outline: none;
         border-color: #ed3237;
       }
     }
-  
+
     button {
       padding: 5px 15px;
       font-size: 16px;
@@ -56,18 +57,18 @@
       color: white;
       cursor: pointer;
       transition: all 0.3s ease;
-  
+
       &:hover {
         background-color: #c51d2d;
         border-color: #c51d2d;
       }
-  
+
       &:focus {
         outline: none;
       }
     }
   }
-  
+
 }
 
 .product-grid {
@@ -75,7 +76,7 @@
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 40px 20px;
   margin-top: 20px;
-  
+
   @include breakpoint('md-max') {
     gap: 80px 40px;
     grid-template-columns: repeat(2, 1fr);
@@ -107,6 +108,14 @@
 
     .product-details {
       padding: 5px 20px 5px 0px;
+
+      .product-description {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
 
       .product-name {
         font-size: 20px;

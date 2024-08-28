@@ -14,8 +14,7 @@ export default function Signup() {
   const [fileName, setFileName] = useState("");
   let checkName = /^[A-Za-z\s]*$/;
   const navigate = useNavigate();
-  let passwordRegex =
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:"<>?])[A-Za-z\d!@#$%^&*()_+{}:"<>?]{9,}$/;
+  let passwordRegex =/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:"<>?.])[A-Za-z\d!@#$%^&*()_+{}:"<>?.]{9,}$/;
 
   const changeHandler = (e) => {
     if (e.target.name === "role") {
@@ -216,7 +215,9 @@ export default function Signup() {
                 <span>Upload Visiting Card</span>
                 <i className="fa-solid fa-arrow-up-from-bracket"></i>
                 <br />
-                <span style={{fontSize:"12px",fontStyle:"italic"}}>{fileName}</span>
+                <span style={{ fontSize: "12px", fontStyle: "italic" }}>
+                  {fileName}
+                </span>
               </label>
               <input
                 type="file"
