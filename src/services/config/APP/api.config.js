@@ -1,5 +1,7 @@
-const protocol = "https";
+// const protocol = "http";
 // const host = "localhost:3002";
+
+const protocol = "https";
 const host = "api.imagelights.in";
 // http://13.202.5.33:3002/api/v1
 // const protocol = "http";

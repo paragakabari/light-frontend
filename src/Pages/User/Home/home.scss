@@ -96,11 +96,7 @@
 
 
 }
-.sliderOuter{
-  .product-slider{
-    width: 50%;
-  }
-}
+
 .product-slider {
   padding: 0 0 50px 0;
   position: relative;
@@ -108,7 +104,7 @@
   .slick-slide {
     padding: 10px !important;
   }
-  
+
   .slick-arrow {
     position: absolute;
     height: 30px;
@@ -123,12 +119,12 @@
     text-align: center;
     transition: 0.3s ease-in-out;
   }
-  
+
   .slick-arrow:hover {
     background-color: #ed3337;
     color: #fff;
   }
-  
+
   .slick-arrow-left {
     right: 50px;
     top: -5%;
@@ -142,7 +138,7 @@
     transform: translateY(-50%);
     z-index: 1;
   }
-  
+
   .product-card {
     text-align: center;
     position: relative;
@@ -154,18 +150,20 @@
     overflow: hidden;
     width: 50%;
 
-    
     @include breakpoint("md-max") {
-      padding: 80px;
+      width: auto;
     }
 
     .product-image {
+      height: 250px;
       width: 100%;
       object-fit: fill;
-      height: 170px;
       border-radius: 10px;
-      // margin-bottom: 15px;
-      transition: transform .3s
+      transition: transform .3s;
+
+      @include breakpoint("md-max") {
+        object-fit: contain;
+      }
     }
 
     .product-details {
@@ -361,15 +359,16 @@
     padding: 7px 15px;
     font-weight: 800;
     border-radius: 10px;
-    transition: transform 1s;
     background-color: #ed3337;
     color: #e9e9e9;
+    transition: all ease-in-out .3S;
+
+    &:hover {
+      color: black;
+      background-color: transparent;
+    }
   }
 
-  .all-product-btn:hover {
-    color: black;
-    background-color: transparent;
-  }
 }
 
 .testimonials-section {
