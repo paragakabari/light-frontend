@@ -109,6 +109,7 @@ export default function Signup() {
     formData.append("password", signupData.password);
     formData.append("role", signupData.role ? signupData.role : "user");
     formData.append("images", signupData.certificate);
+    formData.append("phone",signupData.phone);
 
     ApiPost("auth/register", formData)
       .then((res) => {
@@ -133,6 +134,10 @@ export default function Signup() {
 
     if (!signupData.password) {
       errors.password = "Password is required !";
+    }
+
+    if (!signupData.phone) {
+      errors.phone = "Phone is required !";
     }
 
     if (!signupData.certificate && uplodeFile) {
@@ -173,7 +178,23 @@ export default function Signup() {
             value={signupData.email || ""}
             onChange={changeHandler}
           />
-          <span className="errorMsg">{errors.email}</span>
+          <input
+            type="phone"
+            placeholder="1234567890"
+            name="phone"
+            maxLength={10}
+            value={signupData.phone || ""}
+            onKeyPress={(event) => {
+              // only 10 digit number
+
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+
+            }}
+            onChange={changeHandler}
+          />
+          <span className="errorMsg">{errors.phone}</span>
           <div className="password-container">
             <input
               type={passwordVisible ? "text" : "password"}
