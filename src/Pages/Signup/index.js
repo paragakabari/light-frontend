@@ -64,7 +64,23 @@ export default function Signup() {
       } else {
         errors[e.target.name] = "";
       }
+
+
     }
+
+
+    // -=-=-=-=-=- phone -=-=-=-=-=-=
+    if (e.target.name === "phone") {
+      if (e.target.value.length <= 0) {
+        errors[e.target.name] = e.target.name + " are required !";
+      } else if (e.target.value.length < 10) {
+        errors[e.target.name] = "Phone Number must be 10 digit !";
+      }
+      else {
+        errors[e.target.name] = "";
+      }
+    }
+    
 
     // -=-=-=-=-=-Password -=-=-=-=-=-=
     if (e.target.name === "password") {
