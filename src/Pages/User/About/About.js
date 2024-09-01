@@ -8,11 +8,17 @@ export default function About() {
             <div className='w-full'>
                 <div className='container'>
                     <h1>
-                        Who We Are
+                        About Us
                     </h1>
                     <p>
-                        In Vision provides recruitment, staffing, and placement services to clients throughout Canada. Utilizing our team’s combined expertise and resources, we seek out and identify qualified candidates. We analyze their strengths, conduct cultural fit assessments, and match them with the right employers.
-                    </p>
+                    Welcome to IMAGE LIGHT, where we specialize in crafting premium aluminum clip-on lighting photo frames, exclusive home decor aluminum frames, and high-quality electrical products. Our mission is to combine innovation and style, creating products that not only illuminate but also enhance the beauty of your spaces.
+                          </p>
+                        <p>
+                        At IMAGE LIGHT, we are committed to delivering solutions that reflect your unique taste and meet your functional needs. From our stylish , modern photo frames to our reliable electrical products, every item in our collection is designed with precision and care.
+                        </p>
+                        <p>
+                        Discover the perfect blend of style and functionality with IMAGE LIGHT—your destination for exceptional lighting, decor, and electrical solutions.
+                        </p>
                     <div className='button-outline'>
                         <NavLink to={"/contact"}>Contact Us</NavLink>
                     </div>
@@ -25,21 +31,13 @@ export default function About() {
             <div className='grid-items'>
                 <h2>InVision Story</h2>
                 <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with 
-                    desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                </p>
+                Here's a concise version of the InVision story for IMAGE LIGHT:
+
                 <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 
-                    'Content here,
+                <b> IMAGE LIGHT</b> is dedicated to crafting innovative aluminum clip-on lighting photo frames, exclusive home decor aluminum photo frames, and electrical products. We bridge the gap between dealers and our company, ensuring seamless collaboration and growth in the electrical products market. Our focus on quality and customer satisfaction drives us to continually improve and expand our offerings. Through our unique designs and reliable products, we aim to illuminate every home with style and efficiency.     </p>
+
                 </p>
-                <p>
-                    Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and 
-                    the like).
-                </p>
-                <p>
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 
-                    'Content here,
-                </p>
+              
             </div>
             <div className='grid-items'>
                 <div className='img'>
@@ -57,29 +55,14 @@ export default function About() {
                 Who we are?
                 </h2>
                 <p>
-                    InVision is 100% Canadian owned. We have over 40 years combined recruiting experience, with success in sectors such as Engineering, Industrial/Skilled Trades, Information Technology and Professional Services within Canada and the U.S. We have a successful track record working on both small and large recruitment projects, across North America in sectors such as Mass Transit, Automotive/Aerospace, Utilities/Power and Automation. We have an excellent reputation of being professional, honest, and 
-                    caring while developing long term relationships with clients, candidates, and employees.
-                </p>
+                We are a company that specializes in creating unique lighting products, including electrical products and photo frames. Our frames are designed to light up your favorite pictures, making them perfect for advertising or decorating your home. We combine beautiful designs with practical lighting solutions to enhance any space.
+                        </p>
                 <p>
-                    We provide full recruitment services, including permanent placement, contract/temporary placement and payroll services, while 
-                    always following our candidate process and client process.
+                We are the company that also provides the platform for the business between the dealers and our company to emphasize an improvement of the dealers and company both
                 </p>
-                <p>
-                    Our commitment as we continue to grow and evolve is to provide the highest level of service while continuing to foster and development strong relationships and partnerships with both our clients and Candidates. InVision will also look to grow into new verticals, geographies, and stay on top of 
-                    emerging technologies for the benefit of our customers.
-                </p>
+              
             </div>
-            <div className='grid-items'>
-                <h2>What Sets Us Apart
-                </h2>
-                <p>
-                With over 40 years of combined recruitment expertise in Engineering/Manufacturing, Skilled Trades, IT and Office/Professional Services, the Managing Partners at InVision are actively involved in the entire recruitment process for all of our clients. Our clients can expect us to be engaged from the time that a job order is taken, throughout the entire recruitment process. This hands on approach ensures that InVision’s recruitment search methodologies, candidate qualification processes and overall service quality is an “industry leader”.
-                </p>
-                <p>
-                    InVision provides strategic and focused search techniques to enhance the overall recruitment experience of our customers. We strive to provide our recruitment service at a higher level than our competition, resulting in more accurately sourced and suitable candidates for each opening. This means that our clients are receiving resumes that are vetted and qualified for their specific roles based on a candidate’s technical expertise, and Company “fit”. We place a very high standard on the services we provide, and it is our 
-                    commitment to provide our best effort until a role is filled.
-                </p>
-            </div>
+           
         </div>
       </div>
     </div>
