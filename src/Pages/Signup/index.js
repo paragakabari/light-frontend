@@ -36,68 +36,82 @@ export default function Signup() {
     setSignupData({ ...signupData });
     setBlanck({ ...blanck });
 
-    // Validate fields on change
-    validateField(name, value);
-  };
+    // ==-=-=-=-=-=-=-=-=-=-=-=-=-=- onchange Validation Start -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-  const validateField = (name, value) => {
-    let errorMsg = "";
+    // -=-=-=-=-=- fullName -=-=-=-=-=-=
+    if (e.target.name === "fullName") {
+      if (e.target.value.length <= 0) {
+        errors[e.target.name] = "Full Name is required !";
+      } else if (!checkName.test(signupData[e.target.name])) {
+        errors[e.target.name] = "Full Name not Valid !";
+      } else {
+        errors[e.target.name] = "";
+      }
+    }
 
-    switch (name) {
-      case "fullName":
-        if (!value) {
-          errorMsg = "Full Name is required!";
-        } else if (!nameRegex.test(value)) {
-          errorMsg = "Full Name is not valid!";
+    // -=-=-=-=-=- email -=-=-=-=-=-=
+    if (e.target.name === "email") {
+      if (e.target.value.length <= 0) {
+        errors[e.target.name] = e.target.name + " is required !";
+      } else if (
+        !(
+          e.target.value.includes("@gmail") ||
+          e.target.value.includes("@outlook") ||
+          e.target.value.includes("@mailinator") ||
+          e.target.value.includes("@fuzitea")
+        )
+      ) {
+        errors[e.target.name] = "Please Enter Valid " + e.target.name + " !";
+      } else {
+        errors[e.target.name] = "";
+      }
+
+
+    }
+
+
+    // -=-=-=-=-=- phone -=-=-=-=-=-=
+    if (e.target.name === "phone") {
+      if (e.target.value.length <= 0) {
+        errors[e.target.name] = e.target.name + " are required !";
+      } else if (e.target.value.length < 10) {
+        errors[e.target.name] = "Phone Number must be 10 digit !";
+      }
+      else {
+        errors[e.target.name] = "";
+      }
+    }
+    
+
+    // -=-=-=-=-=-Password -=-=-=-=-=-=
+    if (e.target.name === "password") {
+      if (e.target.value.length <= 0) {
+        errors[e.target.name] = e.target.name + " are required !";
+      } else if (!passwordRegex.test(signupData.password)) {
+        errors[e.target.name] = (
+          <ul style={{ paddingLeft: "20px" }}>
+            <li>Password must be at least 9 characters long </li>
+            <li>Contain at least one special character</li>
+            <li>Contain at least one number</li>
+            <li>Contain at least one uppercase letter</li>
+          </ul>
+        );
+      } else {
+        errors[e.target.name] = "";
+      }
+    }
+
+    // -=-=-=-=-=-certificate -=-=-=-=-=-=
+    if (e.target.name === "certificate") {
+      if (uplodeFile) {
+        if (!e.target.files[0]) {
+          errors[e.target.name] = e.target.name + " are required !";
+        } else {
+          errors[e.target.name] = "";
         }
-        break;
-
-      case "email":
-        if (!value) {
-          errorMsg = "Email is required!";
-        } else if (
-          !/@(gmail|outlook|mailinator|fuzitea)\.com$/.test(value)
-        ) {
-          errorMsg = "Please enter a valid Email!";
-        }
-        break;
-
-      case "phone":
-        if (!value) {
-          errorMsg = "Phone Number is required!";
-        } else if (!phoneRegex.test(value)) {
-          errorMsg = (
-            <ul style={{ listStyleType: "none" }}>
-              <li>Example: 90xxxxxx21</li>
-              <li>Please enter a valid Phone Number</li>
-            </ul>
-          );
-        }
-        break;
-
-      case "password":
-        if (!value) {
-          errorMsg = "Password is required!";
-        } else if (!passwordRegex.test(value)) {
-          errorMsg = (
-            <ul style={{ paddingLeft: "20px" }}>
-              <li>Password must be at least 9 characters long</li>
-              <li>Contain at least one special character</li>
-              <li>Contain at least one number</li>
-              <li>Contain at least one uppercase letter</li>
-            </ul>
-          );
-        }
-        break;
-
-      case "certificate":
-        if (uplodeFile && !signupData[name]) {
-          errorMsg = "Certificate is required!";
-        }
-        break;
-
-      default:
-        break;
+      } else {
+        errors[e.target.name] = "";
+      }
     }
 
     setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMsg }));
@@ -110,6 +124,7 @@ export default function Signup() {
     formData.append("password", signupData.password);
     formData.append("role", signupData.role ? signupData.role : "user");
     formData.append("images", signupData.certificate);
+    formData.append("phone",signupData.phone);
 
     ApiPost("auth/register", formData)
       .then((res) => {
@@ -123,25 +138,26 @@ export default function Signup() {
   };
 
   const submitHandler = () => {
-    const requiredFields = ["fullName", "phone", "email", "password"];
-    let isValid = true;
+    if (!signupData.fullName) {
+      errors.fullName = "Full Name is required !";
+    }
 
-    requiredFields.forEach((field) => {
-      if (!signupData[field]) {
-        isValid = false;
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [field]: `${field.charAt(0).toUpperCase() + field.slice(1)} is required!`,
-        }));
-      }
-    });
+    if (!signupData.email) {
+      errors.email = "Email is required !";
+    }
 
-    if (uplodeFile && !signupData.certificate) {
-      setErrors((prevErrors) => ({
-        ...prevErrors,
-        certificate: "Certificate is required!",
-      }));
-      isValid = false;
+    if (!signupData.password) {
+      errors.password = "Password is required !";
+    }
+
+    if (!signupData.phone) {
+      errors.phone = "Phone is required !";
+    }
+
+    if (!signupData.certificate && uplodeFile) {
+      errors.certificate = "Certificate is required !";
+    } else {
+      errors.certificate = "";
     }
 
     if (isValid && Object.values(errors).every((x) => x === "")) {
@@ -191,8 +207,23 @@ export default function Signup() {
             value={signupData.email || ""}
             onChange={changeHandler}
           />
-          <span className="errorMsg">{errors.email}</span>
+          <input
+            type="phone"
+            placeholder="1234567890"
+            name="phone"
+            maxLength={10}
+            value={signupData.phone || ""}
+            onKeyPress={(event) => {
+              // only 10 digit number
 
+              if (!/[0-9]/.test(event.key)) {
+                event.preventDefault();
+              }
+
+            }}
+            onChange={changeHandler}
+          />
+          <span className="errorMsg">{errors.phone}</span>
           <div className="password-container">
             <input
               type={passwordVisible ? "text" : "password"}

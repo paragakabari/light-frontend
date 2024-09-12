@@ -15,8 +15,7 @@ export default function Footer() {
                 </div>
               </NavLink>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-                tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+              Discover the perfect blend of style and functionality with IMAGE LIGHT—your destination for exceptional lighting, decor, and electrical solutions.
               </p>
             </div>
             <div>
@@ -30,15 +29,15 @@ export default function Footer() {
               <h2>Get In Touch!</h2>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <NavLink >(416) 888-0874</NavLink>
+                <NavLink >(91) 83203 09635</NavLink>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <NavLink >(416) 888-0874</NavLink>
+                <NavLink >(91) 95125 89707</NavLink>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-envelope"></i>
-                <NavLink href="mailto:light@gmail.com">light@gmail.com</NavLink>
+                <NavLink href="mailto:imagelight84@gmail.com">imagelight84@gmail.com</NavLink>
               </div>
             </div>
             <div>
@@ -57,8 +56,7 @@ export default function Footer() {
       <div className="copy-right">
         <div className="container">
           <p>
-            Copyright © 2024 Ekanstech, All rights reserved. Powered by{" "}
-            <NavLink >Ekanstech Solustion</NavLink>
+            Copyright © 2024 Imagelights, All rights reserved.
           </p>
         </div>
       </div>
