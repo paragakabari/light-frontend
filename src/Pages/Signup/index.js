@@ -7,16 +7,15 @@ import { ApiPost } from "../../services/helpers/API/ApiData";
 
 export default function Signup() {
   const [signupData, setSignupData] = useState({});
-  const [blanck, setBlanck] = useState({});
   const [uplodeFile, setUplodeFile] = useState(false);
   const [errors, setErrors] = useState({});
-  const [passwordVisible, setPasswordVisible] = useState(false); // Added state for password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [fileName, setFileName] = useState("");
   const navigate = useNavigate();
 
   const nameRegex = /^[A-Za-z\s]*$/;
   const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}:"<>?.])[A-Za-z\d!@#$%^&*()_+{}:"<>?.]{9,}$/;
-  const phoneRegex = /^\d{10}$/; // Ensure phone number is exactly 10 digits
+  const phoneRegex = /^\d{10}$/; 
 
   const changeHandler = (e) => {
     const { name, value, files } = e.target;
@@ -26,69 +25,63 @@ export default function Signup() {
     }
 
     if (name === "certificate") {
-      signupData[name] = files[0];
+      setSignupData((prevData) => ({
+        ...prevData,
+        [name]: files[0],
+      }));
       setFileName(files[0].name);
     } else {
-      signupData[name] = value;
-      blanck[name] = "";
+      setSignupData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
     }
 
-    setSignupData({ ...signupData });
-    setBlanck({ ...blanck });
+    let newErrors = { ...errors };
 
-    // ==-=-=-=-=-=-=-=-=-=-=-=-=-=- onchange Validation Start -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-    // -=-=-=-=-=- fullName -=-=-=-=-=-=
-    if (e.target.name === "fullName") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = "Full Name is required !";
-      } else if (!checkName.test(signupData[e.target.name])) {
-        errors[e.target.name] = "Full Name not Valid !";
+    // Validation
+    if (name === "fullName") {
+      if (value.length <= 0) {
+        newErrors[name] = "Full Name is required !";
+      } else if (!nameRegex.test(value)) {
+        newErrors[name] = "Full Name not Valid !";
       } else {
-        errors[e.target.name] = "";
+        newErrors[name] = "";
       }
     }
 
-    // -=-=-=-=-=- email -=-=-=-=-=-=
-    if (e.target.name === "email") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = e.target.name + " is required !";
+    if (name === "email") {
+      if (value.length <= 0) {
+        newErrors[name] = "Email is required !";
       } else if (
         !(
-          e.target.value.includes("@gmail") ||
-          e.target.value.includes("@outlook") ||
-          e.target.value.includes("@mailinator") ||
-          e.target.value.includes("@fuzitea")
+          value.includes("@gmail") ||
+          value.includes("@outlook") ||
+          value.includes("@mailinator") ||
+          value.includes("@fuzitea")
         )
       ) {
-        errors[e.target.name] = "Please Enter Valid " + e.target.name + " !";
+        newErrors[name] = "Please Enter Valid Email !";
       } else {
-        errors[e.target.name] = "";
-      }
-
-
-    }
-
-
-    // -=-=-=-=-=- phone -=-=-=-=-=-=
-    if (e.target.name === "phone") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = e.target.name + " are required !";
-      } else if (e.target.value.length < 10) {
-        errors[e.target.name] = "Phone Number must be 10 digit !";
-      }
-      else {
-        errors[e.target.name] = "";
+        newErrors[name] = "";
       }
     }
-    
 
-    // -=-=-=-=-=-Password -=-=-=-=-=-=
-    if (e.target.name === "password") {
-      if (e.target.value.length <= 0) {
-        errors[e.target.name] = e.target.name + " are required !";
-      } else if (!passwordRegex.test(signupData.password)) {
-        errors[e.target.name] = (
+    if (name === "phone") {
+      if (value.length <= 0) {
+        newErrors[name] = "Phone Number is required !";
+      } else if (!phoneRegex.test(value)) {
+        newErrors[name] = "Phone Number must be 10 digits!";
+      } else {
+        newErrors[name] = "";
+      }
+    }
+
+    if (name === "password") {
+      if (value.length <= 0) {
+        newErrors[name] = "Password is required !";
+      } else if (!passwordRegex.test(value)) {
+        newErrors[name] = (
           <ul style={{ paddingLeft: "20px" }}>
             <li>Password must be at least 9 characters long </li>
             <li>Contain at least one special character</li>
@@ -97,24 +90,54 @@ export default function Signup() {
           </ul>
         );
       } else {
-        errors[e.target.name] = "";
+        newErrors[name] = "";
       }
     }
 
-    // -=-=-=-=-=-certificate -=-=-=-=-=-=
-    if (e.target.name === "certificate") {
-      if (uplodeFile) {
-        if (!e.target.files[0]) {
-          errors[e.target.name] = e.target.name + " are required !";
-        } else {
-          errors[e.target.name] = "";
-        }
+    if (name === "certificate" && uplodeFile) {
+      if (!files[0]) {
+        newErrors[name] = "Certificate is required !";
       } else {
-        errors[e.target.name] = "";
+        newErrors[name] = "";
       }
+    } else if (name === "certificate") {
+      newErrors[name] = "";
     }
 
-    setErrors((prevErrors) => ({ ...prevErrors, [name]: errorMsg }));
+    setErrors(newErrors);
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    let newErrors = {};
+
+    if (!signupData.fullName) {
+      newErrors.fullName = "Full Name is required !";
+      valid = false;
+    }
+
+    if (!signupData.email) {
+      newErrors.email = "Email is required !";
+      valid = false;
+    }
+
+    if (!signupData.password) {
+      newErrors.password = "Password is required !";
+      valid = false;
+    }
+
+    if (!signupData.phone) {
+      newErrors.phone = "Phone is required !";
+      valid = false;
+    }
+
+    if (uplodeFile && !signupData.certificate) {
+      newErrors.certificate = "Certificate is required !";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
   };
 
   const addUser = () => {
@@ -122,45 +145,23 @@ export default function Signup() {
     formData.append("name", signupData.fullName);
     formData.append("email", signupData.email);
     formData.append("password", signupData.password);
-    formData.append("role", signupData.role ? signupData.role : "user");
+    formData.append("role", signupData.role || "user");
     formData.append("images", signupData.certificate);
-    formData.append("phone",signupData.phone);
+    formData.append("phone", signupData.phone);
 
     ApiPost("auth/register", formData)
       .then((res) => {
         toast.success("Account Created Successfully!");
-        setSignupData({ ...blanck });
+        setSignupData({});
         navigate("/login");
       })
       .catch((err) => {
-        toast.error(err);
+        toast.error(err.message || "An error occurred.");
       });
   };
 
   const submitHandler = () => {
-    if (!signupData.fullName) {
-      errors.fullName = "Full Name is required !";
-    }
-
-    if (!signupData.email) {
-      errors.email = "Email is required !";
-    }
-
-    if (!signupData.password) {
-      errors.password = "Password is required !";
-    }
-
-    if (!signupData.phone) {
-      errors.phone = "Phone is required !";
-    }
-
-    if (!signupData.certificate && uplodeFile) {
-      errors.certificate = "Certificate is required !";
-    } else {
-      errors.certificate = "";
-    }
-
-    if (isValid && Object.values(errors).every((x) => x === "")) {
+    if (validateForm()) {
       addUser();
     }
   };
@@ -207,23 +208,8 @@ export default function Signup() {
             value={signupData.email || ""}
             onChange={changeHandler}
           />
-          <input
-            type="phone"
-            placeholder="1234567890"
-            name="phone"
-            maxLength={10}
-            value={signupData.phone || ""}
-            onKeyPress={(event) => {
-              // only 10 digit number
+          <span className="errorMsg">{errors.email}</span>
 
-              if (!/[0-9]/.test(event.key)) {
-                event.preventDefault();
-              }
-
-            }}
-            onChange={changeHandler}
-          />
-          <span className="errorMsg">{errors.phone}</span>
           <div className="password-container">
             <input
               type={passwordVisible ? "text" : "password"}

@@ -16,7 +16,13 @@ export default function LogIn() {
     if (!email) {
       return "Email is required!";
     }
-    const validDomains = ["@gmail", "@outlook", "@mailinator", "@modotso.com", "@fuzitea"];
+    const validDomains = [
+      "@gmail",
+      "@outlook",
+      "@mailinator",
+      "@modotso.com",
+      "@fuzitea",
+    ];
     if (!validDomains.some((domain) => email.includes(domain))) {
       return "Please Enter Valid Email!";
     }
@@ -96,7 +102,12 @@ export default function LogIn() {
       </div>
       <div className="auth-right">
         <h2>Sign In</h2>
-        <form onSubmit={(e) => { e.preventDefault(); submitHandler(); }}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitHandler();
+          }}
+        >
           <input
             type="email"
             placeholder="yourmail@email.com"
@@ -127,6 +138,7 @@ export default function LogIn() {
           </div>
           <span className="errorMsg">{errors.password}</span>
           <button type="submit">Sign In</button>
+        {/* <p style={{textAlign:"end", color:"#e01a33"}} className="">Forgot Password</p> */}
         </form>
         <p>
           Don't have an account? <NavLink to="/signup">Sign Up</NavLink>

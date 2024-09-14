@@ -180,7 +180,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <img src={light} style={{ height: "500px" }} alt=""></img>
+                  <img src={light} className="hero-jummar-img" alt=""></img>
                 </div>
               </div>
             </div>

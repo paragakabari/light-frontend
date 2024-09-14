@@ -10,10 +10,12 @@
   position: relative;
   display: flex;
   align-items: center;
+  background-position: center;
 
   @include breakpoint("md-max") {
-    height: 600px;
+    height: 800px;
     padding: 80px;
+    letter-spacing: 5px !important;
   }
 
   &::before {
@@ -30,6 +32,12 @@
     width: 100%;
     position: relative;
 
+    .hero-jummar-img {
+      @include breakpoint("md-max") {
+        display: none;
+      }
+    }
+
     h1 {
       font-size: 51px;
       color: #fff;
@@ -37,7 +45,7 @@
       max-width: 650px;
 
       @include breakpoint("md-max") {
-        font-size: 32px;
+        font-size: 40px;
         line-height: 45px;
       }
     }
@@ -51,7 +59,22 @@
       max-width: 650px;
 
       @include breakpoint("md-max") {
-        font-size: 14px;
+        font-size: 24px;
+      }
+    }
+  }
+
+  .button-outline {
+    padding: 20px;
+
+    a {
+      @include breakpoint("md-max") {
+        background: #ed3237;
+        font-size: 18px;
+
+        &:hover {
+          background: transparent;
+        }
       }
     }
   }
@@ -61,6 +84,12 @@
   padding: 50px 0 20px 0;
   font-size: 20px;
   position: relative;
+}
+
+.slick-dots {
+  @include breakpoint("sm-min") {
+    display: none !important;
+  }
 }
 
 .slick-dots li button:before {
@@ -93,8 +122,6 @@
   height: 3px;
   bottom: 13px;
   left: 0;
-
-
 }
 
 .product-slider {
@@ -118,6 +145,13 @@
     border-radius: 50%;
     text-align: center;
     transition: 0.3s ease-in-out;
+
+    @include breakpoint("md-max") {
+      font-size: 30px !important;
+      height: 60px;
+      width: 60px;
+      line-height: 60px;
+    }
   }
 
   .slick-arrow:hover {
@@ -130,6 +164,10 @@
     top: -5%;
     transform: translateY(-50%);
     z-index: 1;
+
+    @include breakpoint("md-max") {
+      right: 80px;
+    }
   }
 
   .slick-arrow-right {
@@ -152,6 +190,7 @@
 
     @include breakpoint("md-max") {
       width: auto;
+      height: 500px;
     }
 
     .product-image {
@@ -163,6 +202,7 @@
       transition: transform .3s;
 
       @include breakpoint("md-max") {
+        height: 450px;
         object-fit: contain;
       }
     }
@@ -177,18 +217,33 @@
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
 
+      @include breakpoint("md-max") {
+        padding: 15px 30px;
+        display: none;
+      }
+
       .productDescripption {
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+
+        @include breakpoint("md-max") {
+          font-size: 18px;
+          text-align: justify;
+        }
       }
 
       .product-name {
         font-size: 16px;
         margin-bottom: 10px;
         color: #777777;
+
+        @include breakpoint("md-max") {
+          font-size: 20px;
+          font-weight: 800;
+        }
       }
 
       .product-price {
@@ -303,6 +358,20 @@
     justify-content: center;
     align-items: center;
 
+    .text {
+      h3 {
+        @include breakpoint("md-max") {
+          font-size: 25px;
+        }
+      }
+
+      p {
+        @include breakpoint("md-max") {
+          font-size: 22px;
+        }
+      }
+    }
+
     .icon-outer {
       background-color: #fba7a9;
       height: 60px;
@@ -310,8 +379,12 @@
       border-radius: 50%;
       margin-bottom: 15px;
 
-      .icon {
+      @include breakpoint("md-max") {
+        height: 80px;
+        width: 80px;
+      }
 
+      .icon {
         transform: translate(10%, 10%);
         margin-bottom: 20px;
         height: 50px;
@@ -321,6 +394,14 @@
         font-size: 18px;
         line-height: 50px;
         color: #fff;
+        
+        @include breakpoint("md-max") {
+          transform: translate(7%, 7%); 
+          line-height: 70px;
+          height: 70px;
+          width: 70px;
+          font-size: 25px !important;
+        }
       }
 
       .icon:hover {
@@ -354,6 +435,10 @@
   display: flex;
   justify-content: center;
 
+  @include breakpoint("md-max") {
+    font-size: 20px;
+  }
+
   .all-product-btn {
 
     border: 0.5px solid red;
@@ -377,6 +462,8 @@
   background-color: #ececec;
   margin: 30px 0;
   border-radius: 10px;
+  width: 90%;
+  margin: 0 auto;
 
   .testimonial {
     padding: 40px;
@@ -386,6 +473,7 @@
 
     @include breakpoint("md-max") {
       max-width: 600px;
+      padding: 40px 60px;
     }
 
     .cenetr-image {
@@ -396,6 +484,11 @@
         object-fit: cover;
         width: 60px;
         height: 60px;
+
+        @include breakpoint("md-max") {
+          width: 80px;
+          height: 80px;
+        }
       }
     }
 
@@ -412,6 +505,10 @@
       font-size: 13px;
       color: #3a3a3a;
       margin-bottom: 20px;
+
+      @include breakpoint("md-max") {
+        font-size: 18px;
+      }
     }
 
     .testimonial-name {
@@ -425,6 +522,10 @@
       padding-bottom: 40px;
       font-size: 16px;
       color: #999;
+
+      @include breakpoint("md-max") {
+        font-size: 18px;
+      }
     }
   }
 

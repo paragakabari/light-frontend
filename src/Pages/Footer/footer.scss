@@ -24,11 +24,17 @@ footer {
         .social-icon-alignment {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
+            @include breakpoint("md-max") {
+                gap: 30px;
+            }
 
             i {
                 color: #e01a33;
                 cursor: pointer;
+                @include breakpoint("md-max") {
+                    font-size: 30px;
+                }
             }
         }
 
@@ -55,6 +61,14 @@ footer {
             
             i {
                 color: #e01a33;
+                @include breakpoint("md-max") {
+                    font-size: 20px;
+                }
+            }
+            .contectLink{
+                @include breakpoint("md-max") {
+                    font-size: 20px;
+                }
             }
         }
         
@@ -90,6 +104,9 @@ footer {
                 img {
                     cursor: pointer;
                     max-width: 140px;
+                    @include breakpoint("md-max") {
+                        max-width: 200px;
+                    }
                 }
 
                 span {

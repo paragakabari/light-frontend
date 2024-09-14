@@ -15,7 +15,7 @@ export default function Footer() {
                 </div>
               </NavLink>
               <p>
-              Discover the perfect blend of style and functionality with IMAGE LIGHT—your destination for exceptional lighting, decor, and electrical solutions.
+              Discover the perfect blend of style and functionality with IMAGE LIGHT your destination for exceptional lighting, decor, and electrical solutions.
               </p>
             </div>
             <div>
@@ -29,15 +29,15 @@ export default function Footer() {
               <h2>Get In Touch!</h2>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <NavLink >(91) 83203 09635</NavLink>
+                <a className="contectLink" href="tel:+918320309635">(+91) 83203 09635</a>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-phone"></i>
-                <NavLink >(91) 95125 89707</NavLink>
+                <a className="contectLink" href="tel:+919512589707">(+91) 95125 89707</a>
               </div>
               <div className="icon-text">
                 <i className="fa-solid fa-envelope"></i>
-                <NavLink href="mailto:imagelight84@gmail.com">imagelight84@gmail.com</NavLink>
+                <a className="contectLink" href="mailto:imagelight84@gmail.com">imagelight84@gmail.com</a>
               </div>
             </div>
             <div>
