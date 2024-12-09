@@ -180,7 +180,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div>
-                  <img src={light} style={{ height: "500px" }} alt=""></img>
+                  <img src={light} className="hero-jummar-img" alt=""></img>
                 </div>
               </div>
             </div>
@@ -195,11 +195,13 @@ export default function Home() {
                 <div className="product-slider">
                   {products?.map((product) => (
                     <div key={product.id} className="product-card">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="product-image"
-                      />
+                      <a href={product.images[0]} target="_blank" rel="noopener noreferrer">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="product-image"
+                        />
+                      </a>
                       <div className="product-details">
                         <h3 className="product-name">{product.name}</h3>
                         <div className="product-price">
@@ -233,11 +235,13 @@ export default function Home() {
                 <Slider {...settings}>
                   {products?.map((product) => (
                     <div key={product.id} className="product-card">
-                      <img
-                        src={product.images[0]}
-                        alt={product.name}
-                        className="product-image"
-                      />
+                     <a href={product.images[0]} target="_blank" rel="noopener noreferrer">
+                        <img
+                          src={product.images[0]}
+                          alt={product.name}
+                          className="product-image"
+                        />
+                      </a>
                       <div className="product-details">
                         <h3 className="product-name">{product.name}</h3>
                         <div className="product-price">
@@ -292,7 +296,7 @@ export default function Home() {
               <div className="offer-content">
                 <h3 className="offer-title">{offers[0].title}</h3>
                 <p className="offer-description">{offers[0].description}</p>
-                <a href={offers[0].link} className="offer-link">
+                <a href={offers[0].link} className="offer-link" >
                   View Collection
                 </a>
               </div>

@@ -2,20 +2,26 @@ import React from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "../../assets/img/Logo.png";
 import toast from "react-hot-toast";
+
 export default function AdminSidebar({ isOpen, onClose }) {
   const router = useNavigate();
   const path = useLocation().pathname;
+  
   const logout = () => {
     localStorage.clear();
     sessionStorage.clear();
     toast.success("Logout Successfully");
     router("/admin");
   };
+
+  // Render the sidebar only if isOpen is true
+  if (!isOpen) return null;
+
   return (
     <div className="sidebarSection">
       <div className="sidebarTop">
         <div className="sidebarFlexAlignment">
-          <div className="sidebarLogo" onClick={() => isOpen && onClose()}>
+          <div className="sidebarLogo" onClick={onClose}>
             <img src={Logo} alt="Logo" />
           </div>
           <div className="closeIcon" onClick={onClose}>
@@ -25,85 +31,84 @@ export default function AdminSidebar({ isOpen, onClose }) {
 
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/dashboard" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/dashboard")}>
-              {" "}
+            <NavLink to="/admin/dashboard">
               <p>Dashboard</p>
             </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/product" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/product")}>
-              {" "}
+            <NavLink to="/admin/product">
               <p>Product</p>
             </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/category" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/category")}>
-              {" "}
+            <NavLink to="/admin/category">
               <p>Category</p>
             </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/all-cart" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/all-cart")}>
-              {" "}
+            <NavLink to="/admin/all-cart">
               <p>All Cart</p>
             </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/branch" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/branch")}>
-              {" "}
+            <NavLink to="/admin/branch">
               <p>Branch</p>
             </NavLink>
           </div>
         </div>
-
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/users" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/users")}>
-              {" "}
+            <NavLink to="/admin/users">
               <p>Users</p>
             </NavLink>
           </div>
         </div>
         <div className="sidebarMenu">
           <div
+            onClick={onClose}
             className={`menuList ${
               path === "/admin/contact" ? "activeMenu" : ""
             }`}
           >
-            <NavLink onClick={() => router("/admin/contact")}>
-              {" "}
+            <NavLink to="/admin/contact">
               <p>Contact</p>
             </NavLink>
           </div>

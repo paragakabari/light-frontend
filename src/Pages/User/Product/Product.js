@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import "./product.scss";
 import ProductModel from "./ProductModel";
 import { ApiGet } from "../../../services/helpers/API/ApiData";
-import useDebounce from "../../Comman/UseDebounce";  
+import useDebounce from "../../Comman/UseDebounce";
 
 export default function Product() {
   const [model, setModel] = useState(false);
   const [productData, setProductData] = useState();
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
-  const [selectCategory, setSelectCategory] = useState('');
-  const [searchInput, setsearchInput] = useState('');
+  const [selectCategory, setSelectCategory] = useState("");
+  const [searchInput, setsearchInput] = useState("");
 
   // Debounced search input
   const debouncedSearchInput = useDebounce(searchInput, 1000);
@@ -77,7 +77,7 @@ export default function Product() {
     ApiGet(`products/search?categoryId=${category}`)
       .then((res) => {
         setProducts(res.data.results);
-        setsearchInput('')
+        setsearchInput("");
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +127,7 @@ export default function Product() {
             <div className="product-card" key={x.id}>
               <div className="product-image" onClick={() => modelShow(x)}>
                 {x.images.map((y, index) => (
-                  <img src={y} alt="product" key={index} />
+                    <img src={y} alt="product" key={index} />
                 ))}
               </div>
               <span className="eye" onClick={() => modelShow(x)}>

@@ -17,17 +17,26 @@ header {
         align-items: center;
         justify-content: space-between;
 
+        .desktop-login{
+            @include breakpoint("md-max") {
+                display: none;
+            }
+        }
         .mobile-menu {
             display: none;
 
             @include breakpoint("md-max") {
-                display: block;
+                padding-right: 35px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
             }
 
             i {
                 color: #e01a33;
+                font-size: 50px;
 
-                font-size: 20px;
             }
         }
 
@@ -35,7 +44,7 @@ header {
             display: flex;
             align-items: center;
             gap: 40px;
-
+            
 
             @include breakpoint("md-max") {
                 display: none;
@@ -104,6 +113,9 @@ header {
             img {
                 cursor: pointer;
                 max-width: 140px;
+                @include breakpoint("md-max") {
+                    max-width: 200px;
+                }
             }
 
             span {
@@ -135,10 +147,13 @@ header {
             font-weight: 600;
             display: block;
             transition: all .3S ease-in-out;
-
+            border: 1px solid #ed3237;
+            @include breakpoint("md-max") {
+                font-size: 30px;
+            }
             &:hover {
                 background-color: transparent;
-                color: #ed3237;
+                border: 1px solid #ed3237;
             }
         }
     }
@@ -190,11 +205,13 @@ header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        padding: 20px 60px;
 
         i {
             font-size: 20px;
             color: #e01a33;
             cursor: pointer;
+            font-size: 40px;
         }
 
         .logo {
@@ -206,6 +223,9 @@ header {
             img {
                 cursor: pointer;
                 max-width: 140px;
+                @include breakpoint("md-max") {
+                    max-width: 200px;
+                }
             }
 
             span {
@@ -233,6 +253,9 @@ header {
             font-weight: 600;
             color: #323232;
             text-align: center;
+            @include breakpoint("md-max") {
+                font-size: 30px;
+            }
         }
     }
 }

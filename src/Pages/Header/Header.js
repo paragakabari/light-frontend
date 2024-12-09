@@ -60,48 +60,48 @@ export default function Header() {
               <NavLink to="/contact">Contact</NavLink>
             </div>
 
-            {localStorageData.role === "user" ||
-            localStorageData.role === "dealer" ? (
-              <div className="profile">
-                <Button
-                  aria-controls="simple-menu"
-                  aria-haspopup="true"
-                  onClick={handleClick}
-                  onMouseEnter={handleClick}
-                >
-                  <i className="fa-solid fa-user"></i>
-                </Button>
-                <Menu
-                  id="simple-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleClose}
-                  onMouseLeave={handleClose}
-                >
-                  <MenuItem onClick={handleClose}>
-                    <NavLink to="/profile" className="option-Btn">
-                      <i className="fa-solid fa-user"></i> Profile
-                    </NavLink>
-                  </MenuItem>
-                  <MenuItem onClick={handleClose}>
-                    <NavLink to="/cart" className="option-Btn">
-                      <i className="fa-solid fa-cart-shopping"></i> Cart
-                    </NavLink>
-                  </MenuItem>
+              {localStorageData.role === "user" ||
+              localStorageData.role === "dealer" ? (
+                <div className="profile">
+                  <Button
+                    aria-controls="simple-menu"
+                    aria-haspopup="true"
+                    onClick={handleClick}
+                    onMouseEnter={handleClick}
+                  >
+                    <i className="fa-solid fa-user"></i>
+                  </Button>
+                  <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    onMouseLeave={handleClose}
+                  >
+                    <MenuItem onClick={handleClose}>
+                      <NavLink to="/profile" className="option-Btn">
+                        <i className="fa-solid fa-user"></i> Profile
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <NavLink to="/cart" className="option-Btn">
+                        <i className="fa-solid fa-cart-shopping"></i> Cart
+                      </NavLink>
+                    </MenuItem>
 
-                  <MenuItem onClick={clearAllStorage} className="option-Btn">
-                    <NavLink className="option-Btn">
-                      <i className="fa-solid fa-right-to-bracket"></i> Logout
-                    </NavLink>
-                  </MenuItem>
-                </Menu>
-              </div>
-            ) : (
-              <NavLink to="/login" className="login-btn">
-                Login
-              </NavLink>
-            )}
+                    <MenuItem onClick={clearAllStorage} className="option-Btn">
+                      <NavLink className="option-Btn">
+                        <i className="fa-solid fa-right-to-bracket"></i> Logout
+                      </NavLink>
+                    </MenuItem>
+                  </Menu>
+                </div>
+              ) : (
+                <NavLink to="/login" className="login-btn">
+                  Login
+                </NavLink>
+              )}
 
             <div className="mobile-menu" onClick={() => setHeader(!header)}>
               <i className="fa-solid fa-bars"></i>
