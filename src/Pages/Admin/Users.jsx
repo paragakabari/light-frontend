@@ -5,11 +5,14 @@ import "primeicons/primeicons.css";
 import "./users.scss";
 import { ApiGet } from "../../services/helpers/API/ApiData";
 import UserModel from "./UserModel";
+import AccessModel from "./AccessModel";
 
 function Users() {
   const [data, setData] = useState([]);
   const [viewModel, setViewModel] = useState(false);
+  const [successModel, setSuccessModel] = useState(false);
   const [userData, setUserData] = useState(null);
+
 
   useEffect(() => {
     getUsers();
@@ -30,8 +33,18 @@ function Users() {
     setUserData(user);
   };
 
+  const handleShowAccess = (user) => {
+    setSuccessModel(true);
+    setUserData(user);
+  };
+
   const modalShowHandal = () => {
     setViewModel(false);
+    getUsers();
+  };
+
+  const modalAccessShowHandal = () => {
+    setSuccessModel(false);
     getUsers();
   };
 
@@ -79,9 +92,15 @@ function Users() {
     {
       name: "Details",
       cell: (row) => (
+        <>
         <button className="viewBtn" onClick={() => handleShow(row)}>
           <i className="fa-solid fa-eye"></i>
         </button>
+        <button className="viewBtn" onClick={() => handleShowAccess(row)}>
+          <i className="fa-solid fa-home"></i>
+        </button>
+        </>
+        
       ),
       sortable: false,
     },
@@ -99,6 +118,14 @@ function Users() {
           {viewModel && (
             <UserModel modalShowHandal={modalShowHandal} userData={userData} />
           )}
+          {
+            successModel && (
+              <AccessModel modalAccessShowHandal={modalAccessShowHandal} userData={userData} />
+            )}
+             
+            
+            
+          
         </div>
       </div>
     </div>
