@@ -4,20 +4,11 @@ import { ApiGet, ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
 import "./userModel.scss";
 
 function AccessModel({ userData, modalAccessShowHandal }) {
-  const [status, setStatus] = useState(userData.status);
+ 
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
-  const updateStatus = (data, newStatus) => {
-    ApiPut("users/update-status/" + data.id, { status: newStatus })
-      .then((res) => {
-        setStatus(newStatus);
-        toast.success(`${data.role} ${newStatus} !`);
-      })
-      .catch((err) => {
-        toast.error(`Error: ${err} !`);
-      });
-  };
+ 
 
   const getCategory = () => {
     ApiGet(`categories/addAccess?userId=` + userData.id)
@@ -43,7 +34,7 @@ function AccessModel({ userData, modalAccessShowHandal }) {
 
   useEffect(() => {
     getCategory();
-  }, []);
+  }, [userData.id]);
 
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, isChecked) => {
