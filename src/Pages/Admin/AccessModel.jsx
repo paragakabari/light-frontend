@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { ApiGet, ApiPost, ApiPut } from "../../services/helpers/API/ApiData";
+import { ApiGet, ApiPost } from "../../services/helpers/API/ApiData";
 import "./userModel.scss";
 
 function AccessModel({ userData, modalAccessShowHandal }) {
@@ -34,7 +34,7 @@ function AccessModel({ userData, modalAccessShowHandal }) {
 
   useEffect(() => {
     getCategory();
-  }, [userData.id]);
+  });
 
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, isChecked) => {
