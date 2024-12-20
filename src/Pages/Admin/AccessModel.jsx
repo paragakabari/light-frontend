@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { ApiGet, ApiPost } from "../../services/helpers/API/ApiData";
 import "./userModel.scss";
@@ -9,18 +9,15 @@ function AccessModel({ userData, modalAccessShowHandal }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   
-  const getCategory = () => {
+  const getCategory = useCallback(() => {
     ApiGet(`categories/addAccess?userId=` + userData.id)
       .then((res) => {
-        // Assuming the API response includes an array of categories
-        // and each category has a 'hasAccess' field that determines whether the checkbox is checked
         const categoriesWithAccess = res.data.map((category) => ({
           ...category,
           hasAccess: category.hasAccess || false, // Default to false if no 'hasAccess' value
         }));
         setCategories(categoriesWithAccess);
 
-        // Set initial selectedCategories based on the 'hasAccess' field
         const selected = categoriesWithAccess
           .filter((category) => category.hasAccess)
           .map((category) => category._id);
@@ -29,11 +26,11 @@ function AccessModel({ userData, modalAccessShowHandal }) {
       .catch((err) => {
         toast.error(err.message);
       });
-  };
+  }, [userData.id]);
 
   useEffect(() => {
     getCategory();
-  },[userData]);
+  }, [getCategory]);
 
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, isChecked) => {
