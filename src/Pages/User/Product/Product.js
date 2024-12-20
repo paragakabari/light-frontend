@@ -99,18 +99,32 @@ export default function Product() {
         <div className="heading">
           <h3>Product List</h3>
           <div className="sort-data">
-            <select
-              name="categoryId"
-              value={selectCategory}
-              onChange={catagoryChange}
-            >
-              <option value="">All</option>
-              {category?.map((cat) => (
-                <option key={cat.id} value={cat.id}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            {
+              category && category.length > 0 ?
+             ( <select
+                name="categoryId"
+                value={selectCategory}
+                onChange={catagoryChange}
+              >
+               
+                {category?.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>):(
+                <select
+                name="categoryId"
+                value={selectCategory}
+                onChange={catagoryChange}
+              >
+                <option value="">All</option>
+              </select>
+
+              )
+
+            }
+         
             <div>
               <input
                 type="text"

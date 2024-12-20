@@ -6,6 +6,8 @@ import "./userModel.scss";
 function AccessModel({ userData, modalAccessShowHandal }) {
   const [status, setStatus] = useState(userData.status);
   const [categories, setCategories] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
   const updateStatus = (data, newStatus) => {
     ApiPut("users/update-status/" + data.id, { status: newStatus })
       .then((res) => {
@@ -18,55 +20,62 @@ function AccessModel({ userData, modalAccessShowHandal }) {
   };
 
   const getCategory = () => {
-    ApiGet(`categories/addAccess/userId=`+userData.id)
+    ApiGet(`categories/addAccess?userId=` + userData.id)
       .then((res) => {
-        setCategories(res.data);
+        // Assuming the API response includes an array of categories
+        // and each category has a 'hasAccess' field that determines whether the checkbox is checked
+        const categoriesWithAccess = res.data.map((category) => ({
+          ...category,
+          hasAccess: category.hasAccess || false, // Default to false if no 'hasAccess' value
+        }));
+        setCategories(categoriesWithAccess);
+
+        // Set initial selectedCategories based on the 'hasAccess' field
+        const selected = categoriesWithAccess
+          .filter((category) => category.hasAccess)
+          .map((category) => category._id);
+        setSelectedCategories(selected);
       })
       .catch((err) => {
         toast.error(err.message);
       });
   };
+
   useEffect(() => {
     getCategory();
   }, []);
 
-  const [selectedCategories, setSelectedCategories] = useState([]);
-
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, isChecked) => {
-    console.log(categoryId, isChecked);
     // Update the selectedCategories state
-    if (isChecked) {
-      setSelectedCategories((prevSelected) => [
-        ...prevSelected,
-         categoryId,
-      ]);
-    } else {
-      setSelectedCategories((prevSelected) =>
-        prevSelected.filter((category) => category.categoryId !== categoryId)
-      );
-    }
+    setSelectedCategories((prevSelected) => {
+      if (isChecked) {
+        // Add category to selected list if checked
+        return [...prevSelected, categoryId];
+      } else {
+        // Remove category from selected list if unchecked
+        return prevSelected.filter((id) => id !== categoryId);
+      }
+    });
   };
 
   // Submit function to send selected categories
   const handleSubmit = async () => {
     const payload = {
-      userId:userData.id, // Assuming userId is passed as a prop
-      categoryId: selectedCategories
+      userId: userData.id, // Assuming userId is passed as a prop
+      categoryId: selectedCategories, // Send the selected category IDs
     };
-console.log(payload, "payload")
 
-ApiPost("access/access", payload).then((res) => {
-  
-  toast.success("Access updated successfully!");
-  modalAccessShowHandal();
-}
-).catch((err) => {
-  toast.error(err.message);
-}
-);
+    console.log(payload, "payload");
 
-
+    ApiPost("access/access", payload)
+      .then((res) => {
+        toast.success("Access updated successfully!");
+        modalAccessShowHandal();
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
   };
 
   return (
@@ -75,21 +84,22 @@ ApiPost("access/access", payload).then((res) => {
         <button className="close-btn" onClick={modalAccessShowHandal}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <h2>Category </h2>
+        <h2>Category</h2>
         <div className="main-content">
           <div>
-          {categories &&
-          categories.map((category) => (
-            <div key={category.id} className="access-card">
-              <h3>{category.name}</h3>
-              <input
-                type="checkbox"
-                onChange={(e) =>
-                  handleCheckboxChange(category._id, e.target.checked)
-                }
-              />
-            </div>
-          ))}
+            {categories &&
+              categories.map((category) => (
+                <div key={category._id} className="access-card">
+                  <h3>{category.name}</h3>
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category._id)} // Check if the category is selected
+                    onChange={(e) =>
+                      handleCheckboxChange(category._id, e.target.checked)
+                    }
+                  />
+                </div>
+              ))}
           </div>
           <button onClick={handleSubmit}>Submit Access</button>
         </div>
