@@ -4,12 +4,11 @@ import { ApiGet, ApiPost } from "../../services/helpers/API/ApiData";
 import "./userModel.scss";
 
 function AccessModel({ userData, modalAccessShowHandal }) {
- 
+
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
 
- 
-
+  
   const getCategory = () => {
     ApiGet(`categories/addAccess?userId=` + userData.id)
       .then((res) => {
@@ -34,7 +33,7 @@ function AccessModel({ userData, modalAccessShowHandal }) {
 
   useEffect(() => {
     getCategory();
-  });
+  },[userData]);
 
   // Handle checkbox change
   const handleCheckboxChange = (categoryId, isChecked) => {
