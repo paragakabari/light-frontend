@@ -16,16 +16,18 @@ export default function Product() {
   const debouncedSearchInput = useDebounce(searchInput, 1000);
 
   useEffect(() => {
-    getProduct();
+    // getProduct();
     getCategory();
   }, []);
+
+  useEffect(()=>{
+    localStorage.getItem("role") === "dealer" ? getSortProduct(category[0]?.id) : getProduct();
+  },[category]);
 
   useEffect(() => {
     if (debouncedSearchInput) {
       getSearchProduct(debouncedSearchInput);
-    } else {
-      getProduct();
-    }
+    } 
   }, [debouncedSearchInput]);
 
   const catagoryChange = (e) => {
@@ -100,7 +102,7 @@ export default function Product() {
           <h3>Product List</h3>
           <div className="sort-data">
             {
-              category && category.length > 0 ?
+             localStorage.getItem("role") === "dealer"  ?
              ( <select
                 name="categoryId"
                 value={selectCategory}
@@ -119,6 +121,11 @@ export default function Product() {
                 onChange={catagoryChange}
               >
                 <option value="">All</option>
+                {category?.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
               </select>
 
               )
