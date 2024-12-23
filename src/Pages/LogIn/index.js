@@ -138,7 +138,9 @@ export default function LogIn() {
           </div>
           <span className="errorMsg">{errors.password}</span>
           <button type="submit">Sign In</button>
-        {/* <p style={{textAlign:"end", color:"#e01a33"}} className="">Forgot Password</p> */}
+          <NavLink to="/forgotpassword">
+        <p style={{textAlign:"end", color:"#e01a33"}} className="">Forgot Password</p> 
+        </NavLink>
         </form>
         <p>
           Don't have an account? <NavLink to="/signup">Sign Up</NavLink>

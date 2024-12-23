@@ -15,6 +15,7 @@ import DefaultLayout from "./DefaultLayout";
 import SignedInRoute from "./SignedInRoute";
 import Profile from "../Pages/User/Profile/Profile";
 import Branch from "../Pages/User/Branch/branch";
+import ResetPassword from "../Pages/ResetPassword";
 
 
 export const router = createBrowserRouter([
@@ -46,6 +47,16 @@ export const router = createBrowserRouter([
     ),
     errorElement: <ErrorPage />,
   },
+  {
+    path:"/reset-password/:token",
+    element: (
+      <SignedInRoute>
+        <ResetPassword />
+      </SignedInRoute>
+    ),
+    errorElement: <ErrorPage />,
+  },
+  
 
   {
     path: "/",
