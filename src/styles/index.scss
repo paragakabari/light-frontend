@@ -65,3 +65,10 @@ $break-point: (
   padding: 0 map-get($pixel, md) * 2;
   margin: 0 auto;
 }
+
+.error-text{
+  color: #ed3337;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 5px;
+}
