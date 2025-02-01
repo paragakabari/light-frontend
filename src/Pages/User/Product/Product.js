@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import './product.scss';
 import ProductModel from './ProductModel';
-import { ApiGet } from '../../../services/helpers/API/ApiData';
+import { ApiGet, ApiPost } from '../../../services/helpers/API/ApiData';
 import useDebounce from '../../Comman/UseDebounce';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Product() {
   const [model, setModel] = useState(false);
@@ -11,6 +13,9 @@ export default function Product() {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState('');
   const [searchInput, setsearchInput] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [localStorageData, setLocalStorageData] = useState({});
+  const navigate = useNavigate();
 
   // Debounced search input
   const debouncedSearchInput = useDebounce(searchInput, 1000);
@@ -43,6 +48,27 @@ export default function Product() {
     setSelectCategory('');
     setsearchInput('');
     getProduct();
+  };
+
+   useEffect(() => {
+      const data = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        data[key] = localStorage.getItem(key);
+      }
+      setLocalStorageData(data);
+    }, []);
+
+  const cartHandl = (id, quantity) => {
+    if (
+      localStorageData.role === "user" ||
+      localStorageData.role === "dealer"
+    ) {
+      addCart(id, quantity);
+    } else {
+      toast.error("Please Login First !");
+      navigate("/login");
+    }
   };
 
   const getProduct = () => {
@@ -93,6 +119,20 @@ export default function Product() {
   const modelShow = (x) => {
     setModel(true);
     setProductData(x);
+  };
+
+  const addCart = (id, quantity) => {
+    const data = {
+      productId: id,
+      quantity: quantity,
+    };
+    ApiPost("carts/add", data)
+      .then((res) => {
+        toast.success("Product Added to Cart Successfully!");
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   return (
@@ -148,7 +188,7 @@ export default function Product() {
                   ) : (
                     <div className='product-price'>Price: &#8377;{x.price}</div>
                   )}
-                  <button className='add-to-cart'>Add to Cart</button>
+                  <button onClick={() => cartHandl(x.id, quantity)} className='add-to-cart'>Add to Cart</button>
                 </div>
               </div>
             </div>

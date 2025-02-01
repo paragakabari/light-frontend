@@ -30,6 +30,10 @@ function UserModel({ userData, modalShowHandal }) {
                 <th>Name:</th>
                 <td>{userData.name}</td>
               </tr>
+              {/* <tr>
+                <th>Mobile Number:</th>
+                <td>{userData}</td>
+              </tr> */}
               <tr>
                 <th>Email:</th>
                 <td>{userData.email}</td>
