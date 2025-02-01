@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import "./product.scss";
-import ProductModel from "./ProductModel";
-import { ApiGet } from "../../../services/helpers/API/ApiData";
-import useDebounce from "../../Comman/UseDebounce";
+import { useEffect, useState } from 'react';
+import './product.scss';
+import ProductModel from './ProductModel';
+import { ApiGet } from '../../../services/helpers/API/ApiData';
+import useDebounce from '../../Comman/UseDebounce';
 
 export default function Product() {
   const [model, setModel] = useState(false);
   const [productData, setProductData] = useState();
   const [products, setProducts] = useState([]);
   const [category, setCategory] = useState([]);
-  const [selectCategory, setSelectCategory] = useState("");
-  const [searchInput, setsearchInput] = useState("");
+  const [selectCategory, setSelectCategory] = useState('');
+  const [searchInput, setsearchInput] = useState('');
 
   // Debounced search input
   const debouncedSearchInput = useDebounce(searchInput, 1000);
@@ -20,14 +20,14 @@ export default function Product() {
     getCategory();
   }, []);
 
-  useEffect(()=>{
-    localStorage.getItem("role") === "dealer" ? getSortProduct(category[0]?.id) : getProduct();
-  },[category]);
+  useEffect(() => {
+    localStorage.getItem('role') === 'dealer' ? getSortProduct(category[0]?.id) : getProduct();
+  }, [category]);
 
   useEffect(() => {
     if (debouncedSearchInput) {
       getSearchProduct(debouncedSearchInput);
-    } 
+    }
   }, [debouncedSearchInput]);
 
   const catagoryChange = (e) => {
@@ -40,13 +40,13 @@ export default function Product() {
   };
 
   const clearHandle = () => {
-    setSelectCategory("");
-    setsearchInput("");
+    setSelectCategory('');
+    setsearchInput('');
     getProduct();
   };
 
   const getProduct = () => {
-    ApiGet("products/getAll")
+    ApiGet('products/getAll')
       .then((res) => {
         setProducts(res.data);
       })
@@ -56,7 +56,7 @@ export default function Product() {
   };
 
   const getCategory = () => {
-    ApiGet("categories/getAll")
+    ApiGet('categories/getAll')
       .then((res) => {
         setCategory(res.data);
       })
@@ -79,7 +79,7 @@ export default function Product() {
     ApiGet(`products/search?categoryId=${category}`)
       .then((res) => {
         setProducts(res.data.results);
-        setsearchInput("");
+        setsearchInput('');
       })
       .catch((err) => {
         console.log(err);
@@ -97,83 +97,65 @@ export default function Product() {
 
   return (
     <>
-      <div className="container">
-        <div className="heading">
+      <div className='container'>
+        <div className='heading'>
           <h3>Product List</h3>
-          <div className="sort-data">
-            {
-             localStorage.getItem("role") === "dealer"  ?
-             ( <select
-                name="categoryId"
-                value={selectCategory}
-                onChange={catagoryChange}
-              >
-               
-                {category?.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </option>
-                ))}
-              </select>):(
-                <select
-                name="categoryId"
-                value={selectCategory}
-                onChange={catagoryChange}
-              >
-                <option value="">All</option>
+          <div className='sort-data'>
+            {localStorage.getItem('role') === 'dealer' ? (
+              <select name='categoryId' value={selectCategory} onChange={catagoryChange}>
                 {category?.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
                   </option>
                 ))}
               </select>
+            ) : (
+              <select name='categoryId' value={selectCategory} onChange={catagoryChange}>
+                <option value=''>All</option>
+                {category?.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            )}
 
-              )
-
-            }
-         
             <div>
-              <input
-                type="text"
-                value={searchInput || ""}
-                onChange={searchInputHandle}
-                placeholder="Search products"
-              />
+              <input type='text' value={searchInput || ''} onChange={searchInputHandle} placeholder='Search products' />
               <button onClick={clearHandle}>Clear</button>
             </div>
           </div>
         </div>
-        <div className="product-grid">
+        <div className='product-grid'>
           {products?.map((x) => (
-            <div className="product-card" key={x.id}>
-              <div className="product-image" onClick={() => modelShow(x)}>
+            <div className='product-card' key={x.id}>
+              <div className='product-image' onClick={() => modelShow(x)}>
                 {x.images.map((y, index) => (
-                    <img src={y} alt="product" key={index} />
+                  <img src={y} alt='product' key={index} />
                 ))}
               </div>
-              <span className="eye" onClick={() => modelShow(x)}>
-                <i className="fa-solid fa-eye"></i>
-              </span>
-              <div className="product-details">
-                <div className="product-name">{x.name}</div>
-                <div className="product-price">Price: &#8377;{x.price}</div>
-                {localStorage.getItem("role") === "dealer" && (
-                  <div className="product-price">
-                    Dealer Price: &#8377;{x.dealerPrice}
-                  </div>
-                )}
-                <div className="product-description">{x.description}</div>
+              <div className='product-details'>
+                <div className='product-name' onClick={() => modelShow(x)}>
+                  {x.name}
+                </div>
+
+                <div className='product-footer'>
+                  {localStorage.getItem('role') === 'dealer' ? (
+                    <div className='product-price-container'>
+                      <div className='product-price'>User Price: &#8377;{x.price}</div>
+                      <div className='product-price-dealer'>Dealer Price: &#8377;{x.dealerPrice}</div>
+                    </div>
+                  ) : (
+                    <div className='product-price'>Price: &#8377;{x.price}</div>
+                  )}
+                  <button className='add-to-cart'>Add to Cart</button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-      {model && (
-        <ProductModel
-          productData={productData}
-          modalShowHandal={modalShowHandal}
-        />
-      )}
+      {model && <ProductModel productData={productData} modalShowHandal={modalShowHandal} />}
     </>
   );
 }
