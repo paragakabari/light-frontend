@@ -13,7 +13,7 @@ export default function Product() {
   const [category, setCategory] = useState([]);
   const [selectCategory, setSelectCategory] = useState('');
   const [searchInput, setsearchInput] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
   const [localStorageData, setLocalStorageData] = useState({});
   const navigate = useNavigate();
 
@@ -124,7 +124,7 @@ export default function Product() {
   const addCart = (id, quantity) => {
     const data = {
       productId: id,
-      quantity: quantity,
+      quantity,
     };
     ApiPost("carts/add", data)
       .then((res) => {
@@ -188,7 +188,7 @@ export default function Product() {
                   ) : (
                     <div className='product-price'>Price: &#8377;{x.price}</div>
                   )}
-                  <button onClick={() => cartHandl(x.id, quantity)} className='add-to-cart'>Add to Cart</button>
+                  <button onClick={() => cartHandl(x.id, 1)} className='add-to-cart'>Add to Cart</button>
                 </div>
               </div>
             </div>
